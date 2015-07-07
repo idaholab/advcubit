@@ -22,3 +22,13 @@ advcubit.init(cubitPath)
 The init() function expects the path to the Cubit installation. If the parameter is not provided,
 it will try to use the environment variable $CUBIT_PATH.
 All functions are directly accessible, even though they are organized in different modules.
+To start Cubit, use
+
+advcubit.startCubit()
+
+To directly access the cubit python interface, you must import the cubit module after the initalization
+of advcubit. It will be added to the python import path.
+
+import advcubit
+advcubit.init(cubitPath)
+import cubit

@@ -50,7 +50,7 @@ def createBlock(body, blockId, bodyType = 'volume'):
     :param body: the body to be assigned
     :param blockId: the block id
     :param bodyType: the body type
-    :return:
+    :return: None
     """
     _system.cubitCmd('block {0} {1} {2}'.format(blockId, bodyType, body.id()))
 
@@ -61,7 +61,7 @@ def createBlocks(bodies, blockId, bodyType = 'volume'):
     :param bodies: the body to be assigned
     :param blockId: the block id
     :param bodyType: the body type
-    :return:
+    :return: None
     """
     for body in bodies:
         createBlock(body, blockId, bodyType)
@@ -83,6 +83,16 @@ def setBlockType(blockId, blockType):
     _system.cubitCmd('block {0} element type {1}'.format(blockStr, blockType))
 
 
+def nameBlock(blockId, name):
+    """ Assign a name to a block
+
+    :param blockId: number of block
+    :param name: block name
+    :return: None
+    """
+    _system.cubitCmd('block {0} name "{1}"'.format(blockId, name))
+
+
 def createSideset(bodies, sidesetId, bodyType = 'surface'):
     """ Create a side set
 
@@ -95,6 +105,40 @@ def createSideset(bodies, sidesetId, bodyType = 'surface'):
     for body in bodies:
         tmpStr += ' {0}'.format(body.id())
     _system.cubitCmd('sideset {0} {1} {2}'.format(sidesetId, bodyType, tmpStr))
+
+
+def nameSideset(sidesetId, name):
+    """ Assign a name to a sideset
+
+    :param sidesetId: the number of the sideset
+    :param name: the name to be assigned
+    :return: None
+    """
+    _system.cubitCmd('sideset {0} name "{1}"'.format(sidesetId, name))
+
+
+def createNodeset(bodies, nodesetId, bodyType = 'vertex'):
+    """ Adds bodies to or creates node set
+
+    :param bodies: list of bodies
+    :param nodesetId: number for new/existing node set
+    :param bodyType: type of bodies
+    :return: None
+    """
+    tmpStr = ''
+    for body in bodies:
+        tmpStr += ' {0}'.format(body.id())
+    _system.cubitCmd('nodeset {0} {1} {2}'.format(nodesetId, bodyType, tmpStr))
+
+
+def nameNameset(nodesetId, name):
+    """ Assign a name to a node set
+
+    :param nodesetId: the number of the node set
+    :param name: the name to be assigned
+    :return: None
+    """
+    _system.cubitCmd('nodeset {0} name "{1}"'.format(nodesetId, name))
 
 
 def mesh(body, bodyType = 'volume'):

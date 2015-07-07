@@ -19,7 +19,7 @@ def getLastVolume():
     lastId = _system.cubitModule.get_last_id('body')
 
     try:
-        return system.cubitModule.volume(lastId)
+        return _system.cubitModule.volume(lastId)
     except RuntimeError as e:
         print('Cannot retrieve last volume id:\n' + str(e))
         return None
