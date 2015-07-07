@@ -1,0 +1,24 @@
+A script package for an advanced cubit interface. Provides a lot of functionality, that is not
+included in the official python interface.
+
+INSTALLATION
+------------
+
+To install the package, run:
+
+python setup.py install
+
+Note, that Cubit only supports python 2.7 under Linux and python 2.6 under MacOs. Choose the
+according python executable. To install as a normal user, use the --user flag for the installation.
+
+USAGE
+-----
+
+Import the module into python. The module must be initialized prior to usage. To do so, run:
+
+import advcubit
+advcubit.init(cubitPath)
+
+The init() function expects the path to the Cubit installation. If the parameter is not provided,
+it will try to use the environment variable $CUBIT_PATH.
+All functions are directly accessible, even though they are organized in different modules.
