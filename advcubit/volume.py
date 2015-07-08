@@ -5,11 +5,11 @@ This module provides functions to create missing volume types in Cubit.
 
 import advcubit.system as _system
 import advcubit.curve as _curve
-import advcubit.surface as _surface
 import advcubit.transform as _transform
 import advcubit.boolean as _boolean
 
 import math
+
 
 def getLastVolume():
     """ Retrieve the last created volume
@@ -33,7 +33,8 @@ def sweepDirection(surface, distance, direction = 'z'):
     :return: created volume
     """
     _system.cubitCmd('sweep surface {0} direction {1} distance {2}'.format(surface.id(), direction, distance))
-    return getLastVolume()
+    return _transform.getLastBody()
+
 
 def sweepSurface(surface, curve):
     """ Creates a volume by sweeping a surface along an arbitrary curve
@@ -42,7 +43,7 @@ def sweepSurface(surface, curve):
     :return: create volume
     """
     _system.cubitCmd('Sweep surface {0} along curve {1}'.format(surface.id(), curve.id()))
-    return getLastVolume()
+    return _transform.getLastBody()
 
 
 def cylinder(height, radius):
@@ -88,9 +89,9 @@ def arc(radius, startAngle, endAngle, height, thickness):
               _system.cubitModule.create_vertex(math.cos(startAngle) * (radius + thickness), math.sin(startAngle) * (radius + thickness), height/2)
               ]
 
-    curves = [_surface.createArc(center, points[0], points[1]),
+    curves = [_curve.createArc(center, points[0], points[1]),
               _system.cubitModule.create_curve(points[1], points[2]),
-              _surface.createArc(center, points[2], points[3]),
+              _curve.createArc(center, points[2], points[3]),
               _system.cubitModule.create_curve(points[3], points[0])
               ]
 
