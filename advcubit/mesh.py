@@ -173,6 +173,7 @@ def sweepMesh(body, sources, targets):
         targetStr = '{0}'.format(targets.id())
 
     _system.cubitCmd('volume {0} scheme sweep source {1} target {2}'.format(body.id(), sourceStr, targetStr))
+    mesh(body.volumes()[0])
 
 def scaleMesh(factor):
     """ Scale created mesh
