@@ -6,8 +6,6 @@ in Cubit's python interface. Before it can be used, init() must be called and pa
 Cubit installation.
 """
 
-__author__ = 'Hans R Hammer'
-
 import advcubit.system as _system
 
 _system.checkVersion()

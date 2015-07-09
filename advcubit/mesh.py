@@ -4,7 +4,7 @@
 import advcubit.system as _system
 
 
-def setInterval(body, interval, equal = True, bodyType = 'curve'):
+def setInterval(body, interval, equal=True, bodyType='curve'):
     """ Set the number of intervals for a curve
 
     :param body: the base curve
@@ -18,7 +18,7 @@ def setInterval(body, interval, equal = True, bodyType = 'curve'):
         _system.cubitCmd('{0} {1} scheme equal'.format(bodyType, body.id()))
 
 
-def setAutoSize(body, factor, propagate = True, bodyType = 'curve'):
+def setAutoSize(body, factor, propagate=True, bodyType='curve'):
     """ Set auto size on a surface or curve
 
     :param body: the body
@@ -33,7 +33,7 @@ def setAutoSize(body, factor, propagate = True, bodyType = 'curve'):
     _system.cubitCmd(tmpStr)
 
 
-def setMeshScheme(body, meshScheme, bodyType = 'surface'):
+def setMeshScheme(body, meshScheme, bodyType='surface'):
     """ Assign a meshing scheme to a body
 
     :param body: the body
@@ -44,7 +44,7 @@ def setMeshScheme(body, meshScheme, bodyType = 'surface'):
     _system.cubitCmd('{0} {1} scheme {2}'.format(bodyType, body.id(), meshScheme))
 
 
-def createBlock(body, blockId, bodyType = 'volume'):
+def createBlock(body, blockId, bodyType='volume'):
     """ Assign a body to a block
 
     :param body: the body to be assigned
@@ -55,7 +55,7 @@ def createBlock(body, blockId, bodyType = 'volume'):
     _system.cubitCmd('block {0} {1} {2}'.format(blockId, bodyType, body.id()))
 
 
-def createBlocks(bodies, blockId, bodyType = 'volume'):
+def createBlocks(bodies, blockId, bodyType='volume'):
     """ Assign a list of bodies to a block
 
     :param bodies: the body to be assigned
@@ -93,7 +93,7 @@ def nameBlock(blockId, name):
     _system.cubitCmd('block {0} name "{1}"'.format(blockId, name))
 
 
-def createSideset(bodies, sidesetId, bodyType = 'surface'):
+def createSideset(bodies, sidesetId, bodyType='surface'):
     """ Create a side set
 
     :param bodies: list of bodies to assign to side set
@@ -117,7 +117,7 @@ def nameSideset(sidesetId, name):
     _system.cubitCmd('sideset {0} name "{1}"'.format(sidesetId, name))
 
 
-def createNodeset(bodies, nodesetId, bodyType = 'vertex'):
+def createNodeset(bodies, nodesetId, bodyType='vertex'):
     """ Adds bodies to or creates node set
 
     :param bodies: list of bodies
@@ -141,7 +141,7 @@ def nameNameset(nodesetId, name):
     _system.cubitCmd('nodeset {0} name "{1}"'.format(nodesetId, name))
 
 
-def mesh(body, bodyType = 'volume'):
+def mesh(body, bodyType='volume'):
     """ Meshes a body using Cubits internal meshing function, that behaves differently
 
     :param body: the body to mesh
@@ -173,3 +173,12 @@ def sweepMesh(body, sources, targets):
         targetStr = '{0}'.format(targets.id())
 
     _system.cubitCmd('volume {0} scheme sweep source {1} target {2}'.format(body.id(), sourceStr, targetStr))
+    mesh(body.volumes()[0])
+
+
+def scaleMesh(factor):
+    """ Scale created mesh
+    :param factor: factor to scale with
+    :return: None
+    """
+    _system.cubitCmd('transform mesh output scale {0}'.format(factor))

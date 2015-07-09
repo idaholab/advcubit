@@ -16,7 +16,7 @@ def startCubit():
     _system.cubitModule.init([''])
 
 
-def enableDeveloperCommands(enabled = True):
+def enableDeveloperCommands(enabled=True):
     """ Enable the developer commands granting access to advanced beta functionality
 
     :param enabled: Flag if on or off
@@ -29,7 +29,7 @@ def enableDeveloperCommands(enabled = True):
     _system.cubitCmd('set developer commands {0}'.format(enabled))
 
 
-def enableJournal(enabled = True):
+def enableJournal(enabled=True):
     """ Turn the journal on or off,
 
     :param enabled: Flag if on or off
@@ -59,7 +59,7 @@ def open(fileName):
     _system.cubitCmd('open {0}'.format(fileName))
 
 
-def save(fileName, overwrite = True):
+def save(fileName, overwrite=True):
     """ Saves the current file to Cubit format
 
     :param fileName: File name to save to
@@ -73,7 +73,7 @@ def save(fileName, overwrite = True):
         _system.cubitCmd('save as "{0}"'.format(fileName))
 
 
-def export(filename, overwrite = True):
+def export(filename, overwrite=True):
     """ Export to external format
 
     :param filename: path to export to

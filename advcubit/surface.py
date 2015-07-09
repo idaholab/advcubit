@@ -19,7 +19,7 @@ def getLastSurface():
         return None
 
 
-def findSurfaceWithNormal(surfaces, normal, prec = 2):
+def findSurfaceWithNormal(surfaces, normal, prec=2):
     """ Find the plain surfaces with the specified normal and return the list
 
     :param surfaces: list of surfaces
@@ -51,7 +51,7 @@ def findClosestSurface(surfaces, point):
     for surface in surfaces:
         # calc distance to center
         tmpPoint = surface.closest_point_trimmed(point)
-        dist = (tmpPoint[0] - point[0])**2 + (tmpPoint[1] - point[1])**2 + (tmpPoint[2] - point[2])**2
+        dist = (tmpPoint[0] - point[0]) ** 2 + (tmpPoint[1] - point[1]) ** 2 + (tmpPoint[2] - point[2]) ** 2
         # greater distance, store surface
         if dist < tmpDist:
             tmpDist = dist

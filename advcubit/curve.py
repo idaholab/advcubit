@@ -29,11 +29,11 @@ def createArc(centerVertex, startVertex, endVertex):
     :return: None
     """
     _system.cubitCmd('Create Curve Arc Center Vertex {0} {1} {2}'.format(centerVertex.id(),
-                                                                        startVertex.id(), endVertex.id()))
+                                                                         startVertex.id(), endVertex.id()))
     return lastCurve()
 
 
-def createCircle(radius, z = 0.0):
+def createCircle(radius, z=0.0):
     """ Creates a cirle in the xy plane
 
     :param radius: circle radius
@@ -41,7 +41,7 @@ def createCircle(radius, z = 0.0):
     :return: created curve
     """
     vertexCenter = _system.cubitModule.create_vertex(0, 0, z)
-    vertexOuter = _system.cubitModule.create_vertex(radius, z)
+    vertexOuter = _system.cubitModule.create_vertex(radius, 0, z)
     return createArc(vertexCenter, vertexOuter, vertexOuter)
 
 
@@ -58,7 +58,7 @@ def createLine(point1, point2):
     return _system.cubitModule.create_curve(point1, point2)
 
 
-def tangentCurve(baseCurves, tangent, point = (0.0, 0.0, 0.0), prec = 2):
+def tangentCurve(baseCurves, tangent, point=(0.0, 0.0, 0.0), prec=2):
     """
 
     :param baseCurves: list of Curves
@@ -81,5 +81,5 @@ def sortCurves(curves):
     :param curves: list of curves
     :return: new list of sorted curves
     """
-    sortedCurves = sorted(curves, cmp = lambda x, y: cmp(x.lenght(), y.length()))
+    sortedCurves = sorted(curves, cmp=lambda x, y: cmp(x.lenght(), y.length()))
     return sortedCurves

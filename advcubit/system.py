@@ -8,10 +8,10 @@ import sys as _sys
 import os as _os
 
 cubitModule = None  # reference to the cubit module, used in all submodules
-cubitCmd = None     # reference to the used cubit command
+cubitCmd = None  # reference to the used cubit command
 
 
-def init(cubitPath = None, silentMode = True):
+def init(cubitPath=None, silentMode=True):
     """ Sets up the advcubit module
 
     :param cubitPath: Path to cubit installation director, if None $CUBIT_PATH will be used
@@ -19,11 +19,13 @@ def init(cubitPath = None, silentMode = True):
     :return: None
     """
     import platform
+
     global cubitModule
 
     if cubitPath is None:
-        cubitPath = _os.environ['CUBIT_PATH']
-        if cubitPath is None:
+        try:
+            cubitPath = _os.environ['CUBIT_PATH']
+        except KeyError:
             raise EnvironmentError('$CUBIT_PATH not set')
 
     osType = platform.system()
@@ -35,11 +37,12 @@ def init(cubitPath = None, silentMode = True):
         raise RuntimeError('Unsupported operating system: ' + osType)
 
     import cubit
+
     cubitModule = cubit
     enableSilentMode(silentMode)
 
 
-def enableSilentMode(silentMode = True):
+def enableSilentMode(silentMode=True):
     """ Activates the silent mode
 
     :param silentMode: Flag for activation or deactivation

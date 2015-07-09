@@ -5,7 +5,7 @@ import advcubit.system as _system
 import advcubit.transform as _transform
 
 
-def subtract(tool_in, from_in, imprint_in = False, keep_old_in = False):
+def subtract(tool_in, from_in, imprint_in=False, keep_old_in=False):
     """ Provides a bug fix for subtract in Cubit 13.1
 
     :param tool_in: list of bodies to be subtracted
