@@ -71,7 +71,7 @@ def merge(bodies=None, bodyType='body'):
     :return: None
     """
     if bodies is None:
-        imprintAll()
+        mergeAll()
     else:
         tmpStr = 'merge {0}'.format(bodyType)
         for body in bodies:
