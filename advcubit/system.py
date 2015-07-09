@@ -22,8 +22,9 @@ def init(cubitPath = None, silentMode = True):
     global cubitModule
 
     if cubitPath is None:
-        cubitPath = _os.environ['CUBIT_PATH']
-        if cubitPath is None:
+        try:
+            cubitPath = _os.environ['CUBIT_PATH']
+        except KeyError:
             raise EnvironmentError('$CUBIT_PATH not set')
 
     osType = platform.system()

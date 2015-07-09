@@ -54,7 +54,7 @@ def cylinder(height, radius):
     :return: created volume
     """
     circle = _curve.createCircle(radius, 0.5 * height)
-    surface = _system.cubitModule.create_surface([circle])
+    surface = _system.cubitModule.create_surface([circle]).surfaces()[0]
 
     return sweepDirection(surface, height, 'nz')
 

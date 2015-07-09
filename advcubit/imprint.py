@@ -14,7 +14,7 @@ def compress():
     _system.cubitCmd('compress all')
 
 
-def imprint():
+def imprintAll():
     """ Unconditional imprint operations
 
     :return: None
@@ -22,7 +22,7 @@ def imprint():
     _system.cubitCmd('imprint all')
 
 
-def imprintTolerant():
+def imprintTolerantAll():
     """ Unconditional tolerant imprint operation
 
     :return: None
@@ -30,7 +30,7 @@ def imprintTolerant():
     _system.cubitCmd('imprint tolerant all')
 
 
-def merge():
+def mergeAll():
     """ Unconditional merge command
     :return: None
     """
@@ -47,27 +47,33 @@ def imprintCurve(surface, curve):
     _system.cubitCmd('imprint surface {0} curve {1}'.format(surface.id(), curve.id()))
 
 
-def imprint(bodies, bodyType = 'body'):
+def imprint(bodies=None, bodyType='body'):
     """ Imprint a list of bodies
 
-    :param bodies: list of bodies
+    :param bodies: list of bodies or None
     :param bodyType: type of bodies
     :return: None
     """
-    tmpStr = 'imprint {0}'.format(bodyType)
-    for body in bodies:
-        tmpStr += ' {0}'.format(body.id())
-    _system.cubitCmd(tmpStr)
+    if bodies is None:
+        imprintAll()
+    else:
+        tmpStr = 'imprint {0}'.format(bodyType)
+        for body in bodies:
+            tmpStr += ' {0}'.format(body.id())
+        _system.cubitCmd(tmpStr)
 
 
-def merge(bodies, bodyType = 'body'):
+def merge(bodies=None, bodyType='body'):
     """ Merge a list of bodies
 
-    :param bodies: list of bodies
+    :param bodies: list of bodies or None
     :param bodyType: type of bodies
     :return: None
     """
-    tmpStr = 'merge {0}'.format(bodyType)
-    for body in bodies:
-        tmpStr += ' {0}'.format(body.id())
-    _system.cubitCmd(tmpStr)
+    if bodies is None:
+        imprintAll()
+    else:
+        tmpStr = 'merge {0}'.format(bodyType)
+        for body in bodies:
+            tmpStr += ' {0}'.format(body.id())
+        _system.cubitCmd(tmpStr)

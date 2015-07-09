@@ -41,7 +41,7 @@ def createCircle(radius, z = 0.0):
     :return: created curve
     """
     vertexCenter = _system.cubitModule.create_vertex(0, 0, z)
-    vertexOuter = _system.cubitModule.create_vertex(radius, z)
+    vertexOuter = _system.cubitModule.create_vertex(radius, 0, z)
     return createArc(vertexCenter, vertexOuter, vertexOuter)
 
 
