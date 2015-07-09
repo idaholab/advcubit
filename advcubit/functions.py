@@ -3,7 +3,7 @@ Provides general utility functions
 """
 
 
-def roundTuple(baseTuple, prec = 2, tupleType = tuple):
+def roundTuple(baseTuple, prec=2, tupleType=tuple):
     """ Round a tuple
 
     :param baseTuple: input tuple
@@ -17,7 +17,7 @@ def roundTuple(baseTuple, prec = 2, tupleType = tuple):
     return tupleType(rounded)
 
 
-def checkZero(baseTuple, prec = 1e-15, tupleType = tuple):
+def checkZero(baseTuple, prec=1e-15, tupleType=tuple):
     """ Check for numerical issues and set them to zero
 
     :param baseTuple: input tuple

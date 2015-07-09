@@ -25,7 +25,7 @@ def getLastVolume():
         return None
 
 
-def sweepDirection(surface, distance, direction = 'z'):
+def sweepDirection(surface, distance, direction='z'):
     """
     :param surface: source surface
     :param distance: distance to sweep
@@ -82,12 +82,15 @@ def arc(radius, startAngle, endAngle, height, thickness):
     :param thickness:
     :return: created volume
     """
-    center = _system.cubitModule.create_vertex(0, 0, height/2)
-    points = [_system.cubitModule.create_vertex(math.cos(startAngle) * radius, math.sin(startAngle) * radius, height/2),
-              _system.cubitModule.create_vertex(math.cos(endAngle) * radius, math.sin(endAngle) * radius, height/2),
-              _system.cubitModule.create_vertex(math.cos(endAngle) * (radius + thickness), math.sin(endAngle) * (radius + thickness), height/2),
-              _system.cubitModule.create_vertex(math.cos(startAngle) * (radius + thickness), math.sin(startAngle) * (radius + thickness), height/2)
-              ]
+    center = _system.cubitModule.create_vertex(0, 0, height / 2)
+    points = [
+        _system.cubitModule.create_vertex(math.cos(startAngle) * radius, math.sin(startAngle) * radius, height / 2),
+        _system.cubitModule.create_vertex(math.cos(endAngle) * radius, math.sin(endAngle) * radius, height / 2),
+        _system.cubitModule.create_vertex(math.cos(endAngle) * (radius + thickness),
+                                          math.sin(endAngle) * (radius + thickness), height / 2),
+        _system.cubitModule.create_vertex(math.cos(startAngle) * (radius + thickness),
+                                          math.sin(startAngle) * (radius + thickness), height / 2)
+        ]
 
     curves = [_curve.createArc(center, points[0], points[1]),
               _system.cubitModule.create_curve(points[1], points[2]),
@@ -95,7 +98,7 @@ def arc(radius, startAngle, endAngle, height, thickness):
               _system.cubitModule.create_curve(points[3], points[0])
               ]
 
-    normal = _system.cubitModule.create_curve(center, _system.cubitModule.create_vertex(0, 0, -height/2))
+    normal = _system.cubitModule.create_curve(center, _system.cubitModule.create_vertex(0, 0, -height / 2))
     surface = _system.cubitModule.create_surface(curves).surfaces()[0]
     body = sweepSurface(surface, normal)
     _transform.delete(normal, 'curve')
