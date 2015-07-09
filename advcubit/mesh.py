@@ -131,7 +131,7 @@ def createNodeset(bodies, nodesetId, bodyType='vertex'):
     _system.cubitCmd('nodeset {0} {1} {2}'.format(nodesetId, bodyType, tmpStr))
 
 
-def nameNameset(nodesetId, name):
+def nameNodeset(nodesetId, name):
     """ Assign a name to a node set
 
     :param nodesetId: the number of the node set
