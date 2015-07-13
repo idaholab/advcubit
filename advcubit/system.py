@@ -19,7 +19,7 @@ class AdvCubitException(RuntimeError):
         """ Constructor
         :param msg: message string
         """
-        super().__init__(msg)
+        super(AdvCubitException, self).__init__(msg)
 
 
 def init(cubitPath=None, silentMode=True):
@@ -92,13 +92,12 @@ def _initDarwin(cubitPath):
 def checkVersion():
     if _sys.version[0] > 2:
         EnvironmentError('Cubit can only handle Python version 2')
-    if _sys.version_info[1] < 7:
-        warning('Advcubit may have problems with Python version < 2.7')
 
 
 def cubitCmd(cmdStr):
     """ Executes a cubit command and checks for errors
     :param cmdStr: cubit journal command string
+    :raises AdvCubitException: Raises an exception, if command fails
     :return: None
     """
     errorCount = cubitModule.get_error_count()
