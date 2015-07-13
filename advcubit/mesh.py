@@ -44,55 +44,6 @@ def setMeshScheme(body, meshScheme, bodyType='surface'):
     _system.cubitCmd('{0} {1} scheme {2}'.format(bodyType, body.id(), meshScheme))
 
 
-def createBlock(body, blockId, bodyType='volume'):
-    """ Assign a body to a block
-
-    :param body: the body to be assigned
-    :param blockId: the block id
-    :param bodyType: the body type
-    :return: None
-    """
-    _system.cubitCmd('block {0} {1} {2}'.format(blockId, bodyType, body.id()))
-
-
-def createBlocks(bodies, blockId, bodyType='volume'):
-    """ Assign a list of bodies to a block
-
-    :param bodies: the body to be assigned
-    :param blockId: the block id
-    :param bodyType: the body type
-    :return: None
-    """
-    for body in bodies:
-        createBlock(body, blockId, bodyType)
-
-
-def setBlockType(blockId, blockType):
-    """ Set block element type
-
-    :param blockId: Number of block
-    :param blockType: Element type eg HEX6
-    :return: None
-    """
-    try:
-        blockStr = ''
-        for id in blockId:
-            blockStr += ' {0}'.format(blockStr)
-    except ValueError:
-        blockStr = ' {0}'.format(blockId)
-    _system.cubitCmd('block {0} element type {1}'.format(blockStr, blockType))
-
-
-def nameBlock(blockId, name):
-    """ Assign a name to a block
-
-    :param blockId: number of block
-    :param name: block name
-    :return: None
-    """
-    _system.cubitCmd('block {0} name "{1}"'.format(blockId, name))
-
-
 def createSideset(bodies, sidesetId, bodyType='surface'):
     """ Create a side set
 
