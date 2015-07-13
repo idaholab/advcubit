@@ -6,9 +6,20 @@ different operating systems and imports the cubit files
 
 import sys as _sys
 import os as _os
+import warnings as _warnings
 
 cubitModule = None  # reference to the cubit module, used in all submodules
-cubitCmd = None  # reference to the used cubit command
+cubitExec = None    # reference to the used cubit command
+
+
+class AdvCubitException(RuntimeError):
+    """ default exception for advcubit
+    """
+    def __init__(self, msg):
+        """ Constructor
+        :param msg: message string
+        """
+        super().__init__(msg)
 
 
 def init(cubitPath=None, silentMode=True):
@@ -48,11 +59,11 @@ def enableSilentMode(silentMode=True):
     :param silentMode: Flag for activation or deactivation
     :return: None
     """
-    global cubitCmd
+    global cubitExec
     if silentMode:
-        cubitCmd = cubitModule.silent_cmd
+        cubitExec = cubitModule.silent_cmd
     else:
-        cubitCmd = cubitModule.cmd
+        cubitExec = cubitModule.cmd
 
 
 def _initLinux(cubitPath):
@@ -85,9 +96,22 @@ def checkVersion():
         warning('Advcubit may have problems with Python version < 2.7')
 
 
+def cubitCmd(cmdStr):
+    """ Executes a cubit command and checks for errors
+    :param cmdStr: cubit journal command string
+    :return: None
+    """
+    errorCount = cubitModule.get_error_count()
+    cubitExec(cmdStr)
+    newCount = cubitModule.get_error_count()
+    # check if a new error occurred
+    if newCount > errorCount:
+        raise AdvCubitException('Error executing command: {0}'.format(cmdStr))
+
+
 def warning(msg):
     """ Central warning wrapper
     :param msg: Warning message
     :return: None
     """
-    print('Warning: ' + msg)
+    _warnings.warn(msg, RuntimeWarning)
