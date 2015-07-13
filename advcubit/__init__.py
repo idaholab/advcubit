@@ -11,6 +11,8 @@ import advcubit.system as _system
 _system.checkVersion()
 
 from advcubit.system import init
+from advcubit.system import cubitCmd as cmd
+from advcubit.system import AdvCubitException
 
 from advcubit.utility import *
 from advcubit.vertex import *
