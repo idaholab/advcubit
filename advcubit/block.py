@@ -63,7 +63,7 @@ def setBlockType(blockId, elementType):
         blockStr = ''
         for id in blockId:
             blockStr += ' {0}'.format(id)
-    except ValueError:
+    except TypeError:
         blockStr = ' {0}'.format(blockId)
     _system.cubitCmd('block {0} element type {1}'.format(blockStr, elementType))
 
