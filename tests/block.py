@@ -28,7 +28,7 @@ class BlockTest(unittest.TestCase):
         v = _system.cubitModule.brick(1, 1, 1)
         _block.createBlock(v, 1, 'volume')
         try:
-            _block.setBlockType(1, _block.VolumeElementTypes.HEX8)
+            _block.setElementType(1, _block.VolumeElementTypes.HEX8)
         except _system.AdvCubitException as e:
             self.assertTrue(False, str(e))
 

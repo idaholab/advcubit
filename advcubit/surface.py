@@ -27,7 +27,7 @@ def findSurfaceWithNormal(surfaces, normal, prec=2):
     :param prec: number of digits, the normals are compared to
     :return: list of surfaces
     """
-    surfaces = []
+    tmpSurfaces = []
     for surface in surfaces:
         # sort out cylinders
         if surface.is_cylindrical():
@@ -36,7 +36,9 @@ def findSurfaceWithNormal(surfaces, normal, prec=2):
         # test for normal
         surfaceNormal = surface.normal_at([0, 0, 0])
         if _functions.roundTuple(surfaceNormal, prec) == _functions.roundTuple(normal, prec):
-            surfaces.append(surface)
+            tmpSurfaces.append(surface)
+
+    return tmpSurfaces
 
 
 def findClosestSurface(surfaces, point):

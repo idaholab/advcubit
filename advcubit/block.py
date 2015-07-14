@@ -52,7 +52,7 @@ def createBlocks(bodies, blockId, bodyType='volume'):
         createBlock(body, blockId, bodyType)
 
 
-def setBlockType(blockId, elementType):
+def setElementType(blockId, elementType):
     """ Set block element type
 
     :param blockId: Number of block
