@@ -45,9 +45,12 @@ def init(cubitPath=None, silentMode=True):
     elif osType == 'Darwin':
         _initDarwin(cubitPath)
     else:
-        raise RuntimeError('Unsupported operating system: ' + osType)
+        raise EnvironmentError('Unsupported operating system: ' + osType)
 
-    import cubit
+    try:
+        import cubit
+    except ImportError as e:
+        raise ImportError('Error initializing advcubit\nImportError: {0}\nIs the path to Cubit installation directory set correctly?'.format(e))
 
     cubitModule = cubit
     enableSilentMode(silentMode)
