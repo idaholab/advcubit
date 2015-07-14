@@ -2,18 +2,12 @@
 """
 
 import unittest
-
-
 import advcubit.system as _system
 import advcubit.utility as _utility
 import advcubit.block as _block
 
 
-testFolder = 'tests/'
-
-
 class BlockTest(unittest.TestCase):
-
     def setUp(self):
         """ test set up function """
         _utility.startCubit()
