@@ -1,11 +1,12 @@
-""" Surface test file
+""" Node and side sets test file
 """
+
 
 import unittest
 import advcubit.utility as _utility
 
 
-class SurfaceTest(unittest.TestCase):
+class SetTest(unittest.TestCase):
     def setUp(self):
         """ test set up function """
         _utility.startCubit()
@@ -16,5 +17,5 @@ class SurfaceTest(unittest.TestCase):
 
 
 def testSuite():
-    surfaceSuite = unittest.TestSuite()
-    return surfaceSuite
+    setSuite = unittest.TestSuite()
+    return setSuite

@@ -24,4 +24,5 @@ from advcubit.transform import *
 from advcubit.boolean import *
 from advcubit.imprint import *
 from advcubit.mesh import *
+from advcubit.sideset import *
 from advcubit.block import *

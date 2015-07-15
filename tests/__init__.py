@@ -11,6 +11,7 @@ import tests.transform as transform
 import tests.boolean as boolean
 import tests.imprint as imprint
 import tests.mesh as mesh
+import tests.sideset as sideset
 import tests.block as block
 
 
@@ -26,5 +27,6 @@ def testSuite():
     advcubitTests.addTest(boolean.testSuite())
     advcubitTests.addTest(imprint.testSuite())
     advcubitTests.addTest(mesh.testSuite())
+    advcubitTests.addTest(sideset.testSuite())
     advcubitTests.addTest(block.testSuite())
     return advcubitTests
