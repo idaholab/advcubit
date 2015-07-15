@@ -2,6 +2,7 @@
 """
 
 import advcubit.system as _system
+import advcubit.common as _common
 
 
 def getLastBody():
@@ -18,7 +19,7 @@ def getLastBody():
         return None
 
 
-def delete(body, blockType='body'):
+def delete(body, blockType=_common.BodyTypes.body):
     """ Delete a body
 
     :param body: the body to be deleted

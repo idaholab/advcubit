@@ -93,14 +93,15 @@ def export(filename, overwrite=True):
         _system.cubitCmd('export mesh "{0}"'.format(filename))
 
 
-def deleteJournalFiles(path = '.'):
-    """ Delete all Cubit journal files
+def deleteJournalFiles(path = '.', fileName = '*'):
+    """ Delete all Cubit journal files in specified folder
     :param path: path to  search
+    :param fileName: glob file name to delete
     :return:
     """
     import glob
     import os
 
-    filelist = glob.glob(path + '/*.jou')
+    filelist = glob.glob(path + '/{0}.jou'.format(fileName))
     for f in filelist:
         os.remove(f)

@@ -12,7 +12,7 @@ print('Running advcubit test suite:')
 try:
     advcubit.init(silentMode=False)
 except EnvironmentError as e:
-    print('Error initializing advcubit\n' + str(e))
+    print('Error initializing advcubit. $PYTHON_PATH must be set!\n' + str(e))
     sys.exit(1)
 
 # run tests

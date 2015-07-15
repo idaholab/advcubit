@@ -2,6 +2,7 @@
 """
 
 import advcubit.system as _system
+import advcubit.common as _common
 
 
 class SurfaceElementTypes:
@@ -29,30 +30,24 @@ class VolumeElementTypes:
     WEDGE15 = 'WEDGE15'
 
 
-def createBlock(body, blockId, bodyType='volume'):
+def createBlock(bodies, blockId, bodyType=_common.BodyTypes.volume):
     """ Assign a body to a block
 
-    :param body: the body to be assigned
+    :param bodies: the body or list of bodies to be assigned
     :param blockId: the block id
     :param bodyType: the body type
     :return: None
     """
-    _system.cubitCmd('block {0} {1} {2}'.format(blockId, bodyType, body.id()))
+    try:
+        blockStr = ''
+        for body in bodies:
+            blockStr += ' {0}'.format(body.id())
+    except TypeError:
+        blockStr = ' {0}'.format(blockId)
+    _system.cubitCmd('block {0} {1} {2}'.format(blockId, bodyType, blockStr))
 
 
-def createBlocks(bodies, blockId, bodyType='volume'):
-    """ Assign a list of bodies to a block
-
-    :param bodies: the body to be assigned
-    :param blockId: the block id
-    :param bodyType: the body type
-    :return: None
-    """
-    for body in bodies:
-        createBlock(body, blockId, bodyType)
-
-
-def setBlockType(blockId, elementType):
+def setElementType(blockId, elementType):
     """ Set block element type
 
     :param blockId: Number of block

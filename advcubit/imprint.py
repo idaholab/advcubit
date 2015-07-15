@@ -4,6 +4,7 @@ This module contains different methods for imprinting, e.g. all or curve on surf
 """
 
 import advcubit.system as _system
+import advcubit.common as _common
 
 
 def compress():
@@ -47,7 +48,7 @@ def imprintCurve(surface, curve):
     _system.cubitCmd('imprint surface {0} curve {1}'.format(surface.id(), curve.id()))
 
 
-def imprint(bodies=None, bodyType='body'):
+def imprint(bodies=None, bodyType=_common.BodyTypes.body):
     """ Imprint a list of bodies
 
     :param bodies: list of bodies or None
@@ -63,7 +64,7 @@ def imprint(bodies=None, bodyType='body'):
         _system.cubitCmd(tmpStr)
 
 
-def merge(bodies=None, bodyType='body'):
+def merge(bodies=None, bodyType=_common.BodyTypes.body):
     """ Merge a list of bodies
 
     :param bodies: list of bodies or None
