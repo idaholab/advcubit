@@ -2,6 +2,7 @@
 """
 
 import advcubit.system as _system
+import advcubit.common as _common
 
 
 class SurfaceMeshSchemes:
@@ -19,7 +20,7 @@ class VolumeMeshSchemes:
     sphere = 'sphere'
 
 
-def setInterval(body, interval, equal=True, bodyType='curve'):
+def setInterval(body, interval, equal=True, bodyType=_common.BodyTypes.curve):
     """ Set the number of intervals for a curve
 
     :param body: the base curve
@@ -33,7 +34,7 @@ def setInterval(body, interval, equal=True, bodyType='curve'):
         _system.cubitCmd('{0} {1} scheme equal'.format(bodyType, body.id()))
 
 
-def setAutoSize(body, factor, propagate=True, bodyType='curve'):
+def setAutoSize(body, factor, propagate=True, bodyType=_common.BodyTypes.curve):
     """ Set auto size on a surface or curve
 
     :param body: the body
@@ -48,7 +49,7 @@ def setAutoSize(body, factor, propagate=True, bodyType='curve'):
     _system.cubitCmd(tmpStr)
 
 
-def setMeshScheme(body, meshScheme, bodyType='surface', schemeOptions = {}):
+def setMeshScheme(body, meshScheme, bodyType=_common.BodyTypes.surface, schemeOptions = {}):
     """ Assign a meshing scheme to a body
 
     :param body: the body

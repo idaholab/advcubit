@@ -14,6 +14,7 @@ from advcubit.system import init
 from advcubit.system import cubitCmd as cmd
 from advcubit.system import AdvCubitException
 
+from advcubit.common import *
 from advcubit.utility import *
 from advcubit.vertex import *
 from advcubit.curve import *

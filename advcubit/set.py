@@ -2,9 +2,10 @@
 """
 
 import advcubit.system as _system
+import advcubit.common as _common
 
 
-def createSideset(bodies, sidesetId, bodyType='surface'):
+def createSideset(bodies, sidesetId, bodyType=_common.BodyTypes.surface):
     """ Create a side set
 
     :param bodies: list of bodies to assign to side set
@@ -28,7 +29,7 @@ def nameSideset(sidesetId, name):
     _system.cubitCmd('sideset {0} name "{1}"'.format(sidesetId, name))
 
 
-def createNodeset(bodies, nodesetId, bodyType='vertex'):
+def createNodeset(bodies, nodesetId, bodyType=_common.BodyTypes.vertex):
     """ Adds bodies to or creates node set
 
     :param bodies: list of bodies

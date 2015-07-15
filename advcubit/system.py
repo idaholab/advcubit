@@ -108,7 +108,7 @@ def cubitCmd(cmdStr):
     newCount = cubitModule.get_error_count()
     # check if a new error occurred
     if newCount > errorCount:
-        raise AdvCubitException('Error executing command: {0}'.format(cmdStr))
+        raise AdvCubitException('Error executing command: "{0}"'.format(cmdStr))
 
 
 def warning(msg):
