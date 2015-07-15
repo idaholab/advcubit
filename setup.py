@@ -10,6 +10,5 @@ setup(name='Advcubit',
       author='Hans Hammer',
       author_email='hans.hammer@tamu.edu',
       url='git@hpcgitlab.inl.gov:hammhans/advcubit.git',
-      packages=['advcubit'],
-      dependencies=[]
+      packages=['advcubit']
       )

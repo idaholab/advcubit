@@ -2,9 +2,25 @@
 """
 
 import advcubit.system as _system
+import advcubit.common as _common
 
 
-def setInterval(body, interval, equal = True, bodyType = 'curve'):
+class SurfaceMeshSchemes:
+    tri = 'trimesh'
+    pave = 'pave'
+    map = 'map'
+    hole = 'hole'
+    circle = 'circle'
+
+
+class VolumeMeshSchemes:
+    sweep = 'sweep'
+    map = 'map'
+    tet = 'tetmesh'
+    sphere = 'sphere'
+
+
+def setInterval(body, interval, equal=True, bodyType=_common.BodyTypes.curve):
     """ Set the number of intervals for a curve
 
     :param body: the base curve
@@ -18,7 +34,7 @@ def setInterval(body, interval, equal = True, bodyType = 'curve'):
         _system.cubitCmd('{0} {1} scheme equal'.format(bodyType, body.id()))
 
 
-def setAutoSize(body, factor, propagate = True, bodyType = 'curve'):
+def setAutoSize(body, factor, propagate=True, bodyType=_common.BodyTypes.curve):
     """ Set auto size on a surface or curve
 
     :param body: the body
@@ -33,71 +49,22 @@ def setAutoSize(body, factor, propagate = True, bodyType = 'curve'):
     _system.cubitCmd(tmpStr)
 
 
-def setMeshScheme(body, meshScheme, bodyType = 'surface'):
+def setMeshScheme(body, meshScheme, bodyType=_common.BodyTypes.surface, schemeOptions = {}):
     """ Assign a meshing scheme to a body
 
     :param body: the body
     :param meshScheme: the scheme
     :param bodyType: the type of the body
+    :param schemeOptions: options for the specified mesh scheme
     :return: None
     """
+    optionStr = ''
+    for option, value in schemeOptions.items():
+        optionStr += ' {0} {1}'.format(option, value)
     _system.cubitCmd('{0} {1} scheme {2}'.format(bodyType, body.id(), meshScheme))
 
 
-def createBlock(body, blockId, bodyType = 'volume'):
-    """ Assign a body to a block
-
-    :param body: the body to be assigned
-    :param blockId: the block id
-    :param bodyType: the body type
-    :return:
-    """
-    _system.cubitCmd('block {0} {1} {2}'.format(blockId, bodyType, body.id()))
-
-
-def createBlocks(bodies, blockId, bodyType = 'volume'):
-    """ Assign a list of bodies to a block
-
-    :param bodies: the body to be assigned
-    :param blockId: the block id
-    :param bodyType: the body type
-    :return:
-    """
-    for body in bodies:
-        createBlock(body, blockId, bodyType)
-
-
-def setBlockType(blockId, blockType):
-    """ Set block element type
-
-    :param blockId: Number of block
-    :param blockType: Element type eg HEX6
-    :return: None
-    """
-    try:
-        blockStr = ''
-        for id in blockId:
-            blockStr += ' {0}'.format(blockStr)
-    except ValueError:
-        blockStr = ' {0}'.format(blockId)
-    _system.cubitCmd('block {0} element type {1}'.format(blockStr, blockType))
-
-
-def createSideset(bodies, sidesetId, bodyType = 'surface'):
-    """ Create a side set
-
-    :param bodies: list of bodies to assign to side set
-    :param sidesetId: the id number of the sideset
-    :param bodyType: the type of the bodies
-    :return:
-    """
-    tmpStr = ''
-    for body in bodies:
-        tmpStr += ' {0}'.format(body.id())
-    _system.cubitCmd('sideset {0} {1} {2}'.format(sidesetId, bodyType, tmpStr))
-
-
-def mesh(body, bodyType = 'volume'):
+def mesh(body, bodyType='volume'):
     """ Meshes a body using Cubits internal meshing function, that behaves differently
 
     :param body: the body to mesh
@@ -129,3 +96,12 @@ def sweepMesh(body, sources, targets):
         targetStr = '{0}'.format(targets.id())
 
     _system.cubitCmd('volume {0} scheme sweep source {1} target {2}'.format(body.id(), sourceStr, targetStr))
+    mesh(body.volumes()[0])
+
+
+def scaleMesh(factor):
+    """ Scale created mesh
+    :param factor: factor to scale with
+    :return: None
+    """
+    _system.cubitCmd('transform mesh output scale {0}'.format(factor))

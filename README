@@ -9,7 +9,9 @@ To install the package, run:
 python setup.py install
 
 Note, that Cubit only supports python 2.7 under Linux and python 2.6 under MacOs. Choose the
-according python executable. To install as a normal user, use the --user flag for the installation.
+according python executable. To install as a normal user, use the --user flag for the installation, e.g.
+
+python2.6 setup.py install --user # for MacOs as normal user
 
 USAGE
 -----
@@ -17,8 +19,43 @@ USAGE
 Import the module into python. The module must be initialized prior to usage. To do so, run:
 
 import advcubit
-advcubit.init(cubitPath)
+advcubit.init(cubitPath, silent)
 
 The init() function expects the path to the Cubit installation. If the parameter is not provided,
-it will try to use the environment variable $CUBIT_PATH.
+it will try to use the environment variable $CUBIT_PATH. This can be set by
+
+export CUBIT_PATH="path/to/Cubit/"
+
+The second parameter is a flag to echo the commands performed. The default is silent.
+
 All functions are directly accessible, even though they are organized in different modules.
+To start Cubit, use
+
+advcubit.startCubit()
+
+To directly access the cubit python interface, you must import the cubit module after the initialization
+of advcubit. It will be added to the python import path.
+
+import advcubit
+advcubit.init(cubitPath)
+import cubit
+
+EXAMPLES
+--------
+
+Examples are provides in the examples directory. The examples available at the moment are:
+
+basic.py -> shows a simple script using advcubit
+cmd.py -> demonstrates the difference of cubit.cmd and advcubit.cmd
+
+
+TESTS
+-----
+
+To run the tests, simply execute the run_tests.py scripts with the correct python interpreter. To run
+the tests, $CUBIT_PATH must be set. To implement tests, please take a look at the already provided tests.
+The framework already exists, the tests just need to be implemented and added to the according module's
+test suite. For options executing the tests, please refer to the unittest documentation:
+
+https://docs.python.org/2.6/library/unittest.html MacOs python 2.6
+https://docs.python.org/2/library/unittest.html Linux python 2.7

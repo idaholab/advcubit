@@ -6,12 +6,23 @@ different operating systems and imports the cubit files
 
 import sys as _sys
 import os as _os
+import warnings as _warnings
 
 cubitModule = None  # reference to the cubit module, used in all submodules
-cubitCmd = None     # reference to the used cubit command
+cubitExec = None    # reference to the used cubit command
 
 
-def init(cubitPath = None, silentMode = True):
+class AdvCubitException(RuntimeError):
+    """ default exception for advcubit
+    """
+    def __init__(self, msg):
+        """ Constructor
+        :param msg: message string
+        """
+        super(AdvCubitException, self).__init__(msg)
+
+
+def init(cubitPath=None, silentMode=True):
     """ Sets up the advcubit module
 
     :param cubitPath: Path to cubit installation director, if None $CUBIT_PATH will be used
@@ -19,11 +30,13 @@ def init(cubitPath = None, silentMode = True):
     :return: None
     """
     import platform
+
     global cubitModule
 
     if cubitPath is None:
-        cubitPath = _os.environ['CUBIT_PATH']
-        if cubitPath is None:
+        try:
+            cubitPath = _os.environ['CUBIT_PATH']
+        except KeyError:
             raise EnvironmentError('$CUBIT_PATH not set')
 
     osType = platform.system()
@@ -32,24 +45,28 @@ def init(cubitPath = None, silentMode = True):
     elif osType == 'Darwin':
         _initDarwin(cubitPath)
     else:
-        raise RuntimeError('Unsupported operating system: ' + osType)
+        raise EnvironmentError('Unsupported operating system: ' + osType)
 
-    import cubit
+    try:
+        import cubit
+    except ImportError as e:
+        raise ImportError('Error initializing advcubit\nImportError: {0}\nIs the path to Cubit installation directory set correctly?'.format(e))
+
     cubitModule = cubit
     enableSilentMode(silentMode)
 
 
-def enableSilentMode(silentMode = True):
+def enableSilentMode(silentMode=True):
     """ Activates the silent mode
 
     :param silentMode: Flag for activation or deactivation
     :return: None
     """
-    global cubitCmd
+    global cubitExec
     if silentMode:
-        cubitCmd = cubitModule.silent_cmd
+        cubitExec = cubitModule.silent_cmd
     else:
-        cubitCmd = cubitModule.cmd
+        cubitExec = cubitModule.cmd
 
 
 def _initLinux(cubitPath):
@@ -78,8 +95,20 @@ def _initDarwin(cubitPath):
 def checkVersion():
     if _sys.version[0] > 2:
         EnvironmentError('Cubit can only handle Python version 2')
-    if _sys.version_info[1] < 7:
-        warning('Advcubit may have problems with Python version < 2.7')
+
+
+def cubitCmd(cmdStr):
+    """ Executes a cubit command and checks for errors
+    :param cmdStr: cubit journal command string
+    :raises AdvCubitException: Raises an exception, if command fails
+    :return: None
+    """
+    errorCount = cubitModule.get_error_count()
+    cubitExec(cmdStr)
+    newCount = cubitModule.get_error_count()
+    # check if a new error occurred
+    if newCount > errorCount:
+        raise AdvCubitException('Error executing command: "{0}"'.format(cmdStr))
 
 
 def warning(msg):
@@ -87,4 +116,4 @@ def warning(msg):
     :param msg: Warning message
     :return: None
     """
-    print('Warning: ' + msg)
+    _warnings.warn(msg, RuntimeWarning)

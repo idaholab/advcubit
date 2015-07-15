@@ -5,11 +5,11 @@ This module provides functions to create missing volume types in Cubit.
 
 import advcubit.system as _system
 import advcubit.curve as _curve
-import advcubit.surface as _surface
 import advcubit.transform as _transform
 import advcubit.boolean as _boolean
 
 import math
+
 
 def getLastVolume():
     """ Retrieve the last created volume
@@ -19,13 +19,13 @@ def getLastVolume():
     lastId = _system.cubitModule.get_last_id('body')
 
     try:
-        return system.cubitModule.volume(lastId)
+        return _system.cubitModule.volume(lastId)
     except RuntimeError as e:
         print('Cannot retrieve last volume id:\n' + str(e))
         return None
 
 
-def sweepDirection(surface, distance, direction = 'z'):
+def sweepDirection(surface, distance, direction='z'):
     """
     :param surface: source surface
     :param distance: distance to sweep
@@ -33,7 +33,8 @@ def sweepDirection(surface, distance, direction = 'z'):
     :return: created volume
     """
     _system.cubitCmd('sweep surface {0} direction {1} distance {2}'.format(surface.id(), direction, distance))
-    return getLastVolume()
+    return _transform.getLastBody()
+
 
 def sweepSurface(surface, curve):
     """ Creates a volume by sweeping a surface along an arbitrary curve
@@ -42,7 +43,7 @@ def sweepSurface(surface, curve):
     :return: create volume
     """
     _system.cubitCmd('Sweep surface {0} along curve {1}'.format(surface.id(), curve.id()))
-    return getLastVolume()
+    return _transform.getLastBody()
 
 
 def cylinder(height, radius):
@@ -53,7 +54,7 @@ def cylinder(height, radius):
     :return: created volume
     """
     circle = _curve.createCircle(radius, 0.5 * height)
-    surface = _system.cubitModule.create_surface([circle])
+    surface = _system.cubitModule.create_surface([circle]).surfaces()[0]
 
     return sweepDirection(surface, height, 'nz')
 
@@ -81,20 +82,23 @@ def arc(radius, startAngle, endAngle, height, thickness):
     :param thickness:
     :return: created volume
     """
-    center = _system.cubitModule.create_vertex(0, 0, height/2)
-    points = [_system.cubitModule.create_vertex(math.cos(startAngle) * radius, math.sin(startAngle) * radius, height/2),
-              _system.cubitModule.create_vertex(math.cos(endAngle) * radius, math.sin(endAngle) * radius, height/2),
-              _system.cubitModule.create_vertex(math.cos(endAngle) * (radius + thickness), math.sin(endAngle) * (radius + thickness), height/2),
-              _system.cubitModule.create_vertex(math.cos(startAngle) * (radius + thickness), math.sin(startAngle) * (radius + thickness), height/2)
-              ]
+    center = _system.cubitModule.create_vertex(0, 0, height / 2)
+    points = [
+        _system.cubitModule.create_vertex(math.cos(startAngle) * radius, math.sin(startAngle) * radius, height / 2),
+        _system.cubitModule.create_vertex(math.cos(endAngle) * radius, math.sin(endAngle) * radius, height / 2),
+        _system.cubitModule.create_vertex(math.cos(endAngle) * (radius + thickness),
+                                          math.sin(endAngle) * (radius + thickness), height / 2),
+        _system.cubitModule.create_vertex(math.cos(startAngle) * (radius + thickness),
+                                          math.sin(startAngle) * (radius + thickness), height / 2)
+        ]
 
-    curves = [_surface.createArc(center, points[0], points[1]),
+    curves = [_curve.createArc(center, points[0], points[1]),
               _system.cubitModule.create_curve(points[1], points[2]),
-              _surface.createArc(center, points[2], points[3]),
+              _curve.createArc(center, points[2], points[3]),
               _system.cubitModule.create_curve(points[3], points[0])
               ]
 
-    normal = _system.cubitModule.create_curve(center, _system.cubitModule.create_vertex(0, 0, -height/2))
+    normal = _system.cubitModule.create_curve(center, _system.cubitModule.create_vertex(0, 0, -height / 2))
     surface = _system.cubitModule.create_surface(curves).surfaces()[0]
     body = sweepSurface(surface, normal)
     _transform.delete(normal, 'curve')

@@ -6,14 +6,15 @@ in Cubit's python interface. Before it can be used, init() must be called and pa
 Cubit installation.
 """
 
-__author__ = 'Hans R Hammer'
-
 import advcubit.system as _system
 
 _system.checkVersion()
 
 from advcubit.system import init
+from advcubit.system import cubitCmd as cmd
+from advcubit.system import AdvCubitException
 
+from advcubit.common import *
 from advcubit.utility import *
 from advcubit.vertex import *
 from advcubit.curve import *
@@ -23,3 +24,4 @@ from advcubit.transform import *
 from advcubit.boolean import *
 from advcubit.imprint import *
 from advcubit.mesh import *
+from advcubit.block import *

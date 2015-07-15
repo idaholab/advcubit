@@ -16,6 +16,13 @@ def startCubit():
     _system.cubitModule.init([''])
 
 
+def closeCubit():
+    """ Closes cubit
+    :return: None
+    """
+    _system.cubitModule.destroy()
+
+
 def enableDeveloperCommands(enabled = True):
     """ Enable the developer commands granting access to advanced beta functionality
 
@@ -29,7 +36,7 @@ def enableDeveloperCommands(enabled = True):
     _system.cubitCmd('set developer commands {0}'.format(enabled))
 
 
-def enableJournal(enabled = True):
+def enableJournal(enabled=True):
     """ Turn the journal on or off,
 
     :param enabled: Flag if on or off
@@ -56,10 +63,10 @@ def open(fileName):
     :param fileName: File path to open
     :return: None
     """
-    _system.cubitCmd('open {0}'.format(fileName))
+    _system.cubitCmd('open "{0}"'.format(fileName))
 
 
-def save(fileName, overwrite = True):
+def save(fileName, overwrite=True):
     """ Saves the current file to Cubit format
 
     :param fileName: File name to save to
@@ -73,11 +80,28 @@ def save(fileName, overwrite = True):
         _system.cubitCmd('save as "{0}"'.format(fileName))
 
 
-def export(filename, overwrite = True):
+def export(filename, overwrite=True):
     """ Export to external format
 
     :param filename: path to export to
     :param overwrite: flag if to everwrite existing file
     :return: None
     """
-    _system.cubitCmd('export mesh "{0}" overwrite'.format(filename))
+    if overwrite:
+        _system.cubitCmd('export mesh "{0}" overwrite'.format(filename))
+    else:
+        _system.cubitCmd('export mesh "{0}"'.format(filename))
+
+
+def deleteJournalFiles(path = '.', fileName = '*'):
+    """ Delete all Cubit journal files in specified folder
+    :param path: path to  search
+    :param fileName: glob file name to delete
+    :return:
+    """
+    import glob
+    import os
+
+    filelist = glob.glob(path + '/{0}.jou'.format(fileName))
+    for f in filelist:
+        os.remove(f)
