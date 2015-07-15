@@ -43,7 +43,7 @@ def createBlock(bodies, blockId, bodyType=_common.BodyTypes.volume):
         for body in bodies:
             blockStr += ' {0}'.format(body.id())
     except TypeError:
-        blockStr = ' {0}'.format(blockId)
+        blockStr = ' {0}'.format(bodies.id())
     _system.cubitCmd('block {0} {1} {2}'.format(blockId, bodyType, blockStr))
 
 
