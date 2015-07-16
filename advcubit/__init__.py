@@ -16,12 +16,13 @@ from advcubit.system import AdvCubitException
 
 from advcubit.common import *
 from advcubit.utility import *
+from advcubit.transform import *
 from advcubit.vertex import *
 from advcubit.curve import *
 from advcubit.surface import *
 from advcubit.volume import *
-from advcubit.transform import *
 from advcubit.boolean import *
 from advcubit.imprint import *
 from advcubit.mesh import *
+from advcubit.sideset import *
 from advcubit.block import *

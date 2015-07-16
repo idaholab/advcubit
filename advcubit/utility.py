@@ -13,7 +13,10 @@ def startCubit():
 
     :return: None
     """
-    _system.cubitModule.init([''])
+    try:
+        _system.cubitModule.init([''])
+    except AttributeError:
+        raise RuntimeError('AdvCubit is not initialized')
 
 
 def closeCubit():
@@ -23,7 +26,7 @@ def closeCubit():
     _system.cubitModule.destroy()
 
 
-def enableDeveloperCommands(enabled = True):
+def enableDeveloperCommands(enabled=True):
     """ Enable the developer commands granting access to advanced beta functionality
 
     :param enabled: Flag if on or off
@@ -93,7 +96,7 @@ def export(filename, overwrite=True):
         _system.cubitCmd('export mesh "{0}"'.format(filename))
 
 
-def deleteJournalFiles(path = '.', fileName = '*'):
+def deleteJournalFiles(path='.', fileName='*'):
     """ Delete all Cubit journal files in specified folder
     :param path: path to  search
     :param fileName: glob file name to delete

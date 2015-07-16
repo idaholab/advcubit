@@ -3,6 +3,7 @@
 
 import advcubit.system as _system
 import advcubit.common as _common
+import advcubit.functions as _functions
 
 
 class SurfaceElementTypes:
@@ -38,29 +39,17 @@ def createBlock(bodies, blockId, bodyType=_common.BodyTypes.volume):
     :param bodyType: the body type
     :return: None
     """
-    try:
-        blockStr = ''
-        for body in bodies:
-            blockStr += ' {0}'.format(body.id())
-    except TypeError:
-        blockStr = ' {0}'.format(blockId)
-    _system.cubitCmd('block {0} {1} {2}'.format(blockId, bodyType, blockStr))
+    _system.cubitCmd('block {0} {1} {2}'.format(blockId, bodyType, _functions.listIdString(bodies)))
 
 
 def setElementType(blockId, elementType):
     """ Set block element type
 
-    :param blockId: Number of block
+    :param blockId: Id number of block
     :param elementType: Element type from enum ElementType
     :return: None
     """
-    try:
-        blockStr = ''
-        for id in blockId:
-            blockStr += ' {0}'.format(id)
-    except TypeError:
-        blockStr = ' {0}'.format(blockId)
-    _system.cubitCmd('block {0} element type {1}'.format(blockStr, elementType))
+    _system.cubitCmd('block {0} element type {1}'.format(blockId, elementType))
 
 
 def nameBlock(blockId, name):

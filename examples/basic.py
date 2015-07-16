@@ -30,7 +30,7 @@ advcubit.nameBlock(1, 'mein_block')
 # set second order mesh
 advcubit.setElementType(1, advcubit.VolumeElementTypes.WEDGE15)
 # export to exodus
-advcubit.export('example.e', True)
+advcubit.export('basic.e', True)
 # close cubit
 advcubit.closeCubit()
 
