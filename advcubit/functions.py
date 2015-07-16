@@ -69,3 +69,4 @@ def listKeywordString(kargs):
     strList = ''
     for key, value in kargs.items():
         strList += ' {0} {1}'.format(key, value)
+    return strList

@@ -21,11 +21,15 @@ def subtract(tool_in, from_in, imprint_in=False, keep_old_in=False):
     return from_in
 
 
-def intersect(bodies, *args, **kargs):
+def intersect(bodies, *args, **kwargs):
     """ Create the logical AND of bodies
 
     :param bodies: list of bodies
+    :param args: additional parameters for the command: 'option'
+    :param kwargs: additional parameter value pairs: option=value
     :return: intersected body
     """
-    _system.cubitCmd('intersect body {0}'.format(_functions.listIdString(bodies)))
+    _system.cubitCmd('intersect body {0} {1} {2}'.format(_functions.listIdString(bodies),
+                                                         _functions.listStr(args),
+                                                         _functions.listKeywordString(kwargs)))
     return _transform.getLastBody()

@@ -43,8 +43,9 @@ def createCircle(radius, z=0.0):
     """
     vertexCenter = _system.cubitModule.create_vertex(0, 0, z)
     vertexOuter = _system.cubitModule.create_vertex(radius, 0, z)
+    circle = createArc(vertexCenter, vertexOuter, vertexOuter)
     _transform.delete(vertexCenter, _common.BodyTypes.vertex)
-    return createArc(vertexCenter, vertexOuter, vertexOuter)
+    return circle
 
 
 def createLine(point1, point2):

@@ -20,7 +20,7 @@ def imprintAll(*args, **kwargs):
     """ Unconditional imprint operations
 
     :param args: additional parameters for the command: 'option'
-    :param kargs: additional parameter value pairs: option=value
+    :param kwargs: additional parameter value pairs: option=value
     :return: None
     """
     _system.cubitCmd('imprint all {0} {1}'.format((_functions.listStr(args),
@@ -31,7 +31,7 @@ def imprintTolerantAll(*args, **kwargs):
     """ Unconditional tolerant imprint operation
 
     :param args: additional parameters for the command: 'option'
-    :param kargs: additional parameter value pairs: option=value
+    :param kwargs: additional parameter value pairs: option=value
     :return: None
     """
     _system.cubitCmd('imprint tolerant all {0} {1}'.format((_functions.listStr(args),
@@ -42,7 +42,7 @@ def mergeAll(*args, **kwargs):
     """ Unconditional merge command
 
     :param args: additional parameters for the command: 'option'
-    :param kargs: additional parameter value pairs: option=value
+    :param kwargs: additional parameter value pairs: option=value
     :return: None
     """
     _system.cubitCmd('merge all {0} {1}'.format(_functions.listStr(args),
@@ -55,12 +55,12 @@ def imprintCurve(surface, curve, *args, **kwargs):
     :param surface: Surface to imprint on
     :param curve: Curve to imprint
     :param args: additional parameters for the command: 'option'
-    :param kargs: additional parameter value pairs: option=value
+    :param kwargs: additional parameter value pairs: option=value
     :return: None
     """
-    _system.cubitCmd('imprint surface {0} curve {1}'.format(surface.id(), _functions.listIdString(curve),
-                                                            _functions.listStr(args),
-                                                            _functions.listKeywordString(kwargs)))
+    _system.cubitCmd('imprint surface {0} curve {1} {2} {3}'.format(surface.id(), _functions.listIdString(curve),
+                                                                    _functions.listStr(args),
+                                                                    _functions.listKeywordString(kwargs)))
 
 
 def imprint(bodies=None, bodyType=_common.BodyTypes.body, *args, **kwargs):
@@ -69,7 +69,7 @@ def imprint(bodies=None, bodyType=_common.BodyTypes.body, *args, **kwargs):
     :param bodies: list of bodies or None
     :param bodyType: type of bodies
     :param args: additional parameters for the command: 'option'
-    :param kargs: additional parameter value pairs: option=value
+    :param kwargs: additional parameter value pairs: option=value
     :return: None
     """
     if bodies is None:
@@ -86,7 +86,7 @@ def merge(bodies=None, bodyType=_common.BodyTypes.body, *args, **kwargs):
     :param bodies: list of bodies or None
     :param bodyType: type of bodies
     :param args: additional parameters for the command: 'option'
-    :param kargs: additional parameter value pairs: option=value
+    :param kwargs: additional parameter value pairs: option=value
     :return: None
     """
     if bodies is None:
