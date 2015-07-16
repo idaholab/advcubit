@@ -23,8 +23,8 @@ def imprintAll(*args, **kwargs):
     :param kwargs: additional parameter value pairs: option=value
     :return: None
     """
-    _system.cubitCmd('imprint all {0} {1}'.format((_functions.listStr(args),
-                                                   _functions.listKeywordString(kwargs))))
+    _system.cubitCmd('imprint all {0} {1}'.format(_functions.listStr(args),
+                                                  _functions.listKeywordString(kwargs)))
 
 
 def imprintTolerantAll(*args, **kwargs):
@@ -34,8 +34,8 @@ def imprintTolerantAll(*args, **kwargs):
     :param kwargs: additional parameter value pairs: option=value
     :return: None
     """
-    _system.cubitCmd('imprint tolerant all {0} {1}'.format((_functions.listStr(args),
-                                                            _functions.listKeywordString(kwargs))))
+    _system.cubitCmd('imprint tolerant all {0} {1}'.format(_functions.listStr(args),
+                                                           _functions.listKeywordString(kwargs)))
 
 
 def mergeAll(*args, **kwargs):
