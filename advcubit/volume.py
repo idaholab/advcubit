@@ -4,6 +4,7 @@ This module provides functions to create missing volume types in Cubit.
 """
 
 import advcubit.system as _system
+import advcubit.functions as _functions
 import advcubit.curve as _curve
 import advcubit.transform as _transform
 import advcubit.boolean as _boolean
@@ -25,24 +26,48 @@ def getLastVolume():
         return None
 
 
-def sweepDirection(surface, distance, direction='z'):
+def sweepDirection(surface, distance, direction='z', *args, **kwargs):
     """
     :param surface: source surface
     :param distance: distance to sweep
     :param direction: direction: x, y, z, negative: nx, ny, nz
+    :param args: additional parameters for the command: 'option'
+    :param kwargs: additional parameter value pairs: option=value
     :return: created volume
     """
-    _system.cubitCmd('sweep surface {0} direction {1} distance {2}'.format(surface.id(), direction, distance))
+    _system.cubitCmd('sweep surface {0} direction {1} distance {2} {3} {4}'.format(surface.id(), direction, distance,
+                                                                                   _functions.listStr(args),
+                                                                                   _functions.listKeywordString(
+                                                                                       kwargs)))
     return _transform.getLastBody()
 
 
-def sweepSurface(surface, curve):
+def sweepCurve(surface, curve, *args, **kwargs):
     """ Creates a volume by sweeping a surface along an arbitrary curve
     :param surface: source surface
     :param curve: sweep curve
+    :param args: additional parameters for the command: 'option'
+    :param kwargs: additional parameter value pairs: option=value
     :return: create volume
     """
-    _system.cubitCmd('Sweep surface {0} along curve {1}'.format(surface.id(), curve.id()))
+    _system.cubitCmd('Sweep surface {0} along curve {1} {2} {3}'.format(surface.id(), curve.id(),
+                                                                        _functions.listStr(args),
+                                                                        _functions.listKeywordString(kwargs)))
+    return _transform.getLastBody()
+
+
+def sweepVector(surface, vector, *args, **kwargs):
+    """ Creates a volume by sweeping a surface along an arbitrary curve
+    :param surface: source surface
+    :param vector: vector in tuple form
+    :param args: additional parameters for the command: 'option'
+    :param kwargs: additional parameter value pairs: option=value
+    :return: create volume
+    """
+    _system.cubitCmd('Sweep surface {0} vector {1[0]} {1[1]} {1[2]} {2} {3}'.format(surface.id(), vector,
+                                                                                    _functions.listStr(args),
+                                                                                    _functions.listKeywordString(
+                                                                                        kwargs)))
     return _transform.getLastBody()
 
 
@@ -90,7 +115,7 @@ def arc(radius, startAngle, endAngle, height, thickness):
                                           math.sin(endAngle) * (radius + thickness), height / 2),
         _system.cubitModule.create_vertex(math.cos(startAngle) * (radius + thickness),
                                           math.sin(startAngle) * (radius + thickness), height / 2)
-        ]
+    ]
 
     curves = [_curve.createArc(center, points[0], points[1]),
               _system.cubitModule.create_curve(points[1], points[2]),
@@ -100,7 +125,7 @@ def arc(radius, startAngle, endAngle, height, thickness):
 
     normal = _system.cubitModule.create_curve(center, _system.cubitModule.create_vertex(0, 0, -height / 2))
     surface = _system.cubitModule.create_surface(curves).surfaces()[0]
-    body = sweepSurface(surface, normal)
+    body = sweepCurve(surface, normal)
     _transform.delete(normal, 'curve')
 
     return body
