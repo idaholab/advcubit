@@ -67,7 +67,7 @@ def setMeshScheme(body, meshScheme, bodyType=_common.BodyTypes.surface, *args, *
                                                          _functions.listKeywordString(kwargs)))
 
 
-def mesh(body, bodyType='volume', *args, **kwargs):
+def mesh(body, bodyType=_common.BodyTypes.volume, *args, **kwargs):
     """ Meshes a body using Cubits internal meshing function, that behaves differently
 
     :param body: the body to mesh

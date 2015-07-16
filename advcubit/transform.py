@@ -39,8 +39,8 @@ def rotate(body, angle, axis='z', *args, **kwargs):
     :return: None
     """
     _system.cubitCmd('rotate body {0} angle {1} about {2} {3} {4}'.format(body.id(), angle, axis,
-                                                                      _functions.listStr(args),
-                                                                      _functions.listKeywordString(kwargs)))
+                                                                          _functions.listStr(args),
+                                                                          _functions.listKeywordString(kwargs)))
 
 
 def webcut(body, plane='x', offset=0, *args, **kwargs):
