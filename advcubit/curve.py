@@ -4,7 +4,9 @@ This module contains functions to create special kind of curves
 """
 
 import advcubit.system as _system
+import advcubit.common as _common
 import advcubit.functions as _functions
+import advcubit.transform as _transform
 
 
 def lastCurve():
@@ -16,8 +18,7 @@ def lastCurve():
     try:
         return _system.cubitModule.curve(lastId)
     except RuntimeError as e:
-        _system.warning('Cannot retrieve last created surface!\n' + str(e))
-        return None
+        raise _system.AdvCubitException('Cannot retrieve last created surface!\n' + str(e))
 
 
 def createArc(centerVertex, startVertex, endVertex):
@@ -42,6 +43,7 @@ def createCircle(radius, z=0.0):
     """
     vertexCenter = _system.cubitModule.create_vertex(0, 0, z)
     vertexOuter = _system.cubitModule.create_vertex(radius, 0, z)
+    _transform.delete(vertexCenter, _common.BodyTypes.vertex)
     return createArc(vertexCenter, vertexOuter, vertexOuter)
 
 
@@ -81,5 +83,5 @@ def sortCurves(curves):
     :param curves: list of curves
     :return: new list of sorted curves
     """
-    sortedCurves = sorted(curves, cmp=lambda x, y: cmp(x.lenght(), y.length()))
+    sortedCurves = sorted(curves, cmp=lambda x, y: cmp(x.lenght(), y.length())) #TODO check this
     return sortedCurves
