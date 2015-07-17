@@ -2,9 +2,9 @@
 """
 
 import unittest
-import advcubit.system as _system
-import advcubit.utility as _utility
-import advcubit.block as _block
+import advcubit.system_module as _system
+import advcubit.utility_module as _utility
+import advcubit.block_module as _block
 
 
 class BlockTest(unittest.TestCase):

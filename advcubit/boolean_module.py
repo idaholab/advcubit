@@ -1,9 +1,9 @@
 """ Module providing boolean operations
 """
 
-import advcubit.system as _system
-import advcubit.transform as _transform
-import advcubit.functions as _functions
+import advcubit.system_module as _system
+import advcubit.transform_module as _transform
+import advcubit.function_module as _functions
 
 
 def subtract(tool_in, from_in, imprint_in=False, keep_old_in=False):

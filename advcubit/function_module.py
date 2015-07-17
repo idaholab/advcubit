@@ -49,7 +49,7 @@ def listStr(objects):
 
 def listIdString(objects):
     """ create a string of object ids from a list or single object
-    :param objects: single object or list
+    :param objects: single object or list, None gives 'all'
     :return: id list string
     """
     try:                                        # try list
@@ -57,7 +57,10 @@ def listIdString(objects):
         for item in objects:
             strList += ' {0}'.format(item.id())
     except TypeError:                           # catch single item
-        strList = ' {0}'.format(objects.id())
+        if objects is None:
+            strList = ' all'
+        else:
+            strList = ' {0}'.format(objects.id())
     return strList
 
 

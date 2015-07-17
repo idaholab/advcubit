@@ -1,9 +1,9 @@
 """ Mesh control and meshing operations
 """
 
-import advcubit.system as _system
-import advcubit.common as _common
-import advcubit.functions as _functions
+import advcubit.system_module as _system
+import advcubit.common_module as _common
+import advcubit.function_module as _functions
 
 
 class SurfaceMeshSchemes:
@@ -110,3 +110,18 @@ def scaleMesh(factor, *args, **kwargs):
     _system.cubitCmd('transform mesh output scale {0} {1} {2}'.format(factor,
                                                                       _functions.listStr(args),
                                                                       _functions.listKeywordString(kwargs)))
+
+
+def meshQuality(bodies, bodyType=_common.BodyTypes.volume, elementType='', *args, **kwargs):
+    """ Function to check the quality of the mesh
+    :param bodies: list of bodies or single body, None gives all
+    :param bodyType: type of body
+    :param elementType: mesh element type
+    :param args: additional parameters for the command: 'option'
+    :param kwargs: additional parameter value pairs: option=value
+    :return: None
+    """
+    _system.cubitCmd('quality {0} {1} {2} {3} {4}'.format(bodyType, _functions.listIdString(bodies),
+                                                          elementType,
+                                                          _functions.listStr(args),
+                                                          _functions.listKeywordString(kwargs)))

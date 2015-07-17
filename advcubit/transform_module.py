@@ -1,9 +1,9 @@
 """ Transformation operations
 """
 
-import advcubit.system as _system
-import advcubit.common as _common
-import advcubit.functions as _functions
+import advcubit.system_module as _system
+import advcubit.common_module as _common
+import advcubit.function_module as _functions
 
 
 def getLastBody():

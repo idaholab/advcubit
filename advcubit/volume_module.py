@@ -3,11 +3,11 @@
 This module provides functions to create missing volume types in Cubit.
 """
 
-import advcubit.system as _system
-import advcubit.functions as _functions
-import advcubit.curve as _curve
-import advcubit.transform as _transform
-import advcubit.boolean as _boolean
+import advcubit.system_module as _system
+import advcubit.function_module as _functions
+import advcubit.curve_module as _curve
+import advcubit.transform_module as _transform
+import advcubit.boolean_module as _boolean
 
 import math
 

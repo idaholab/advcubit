@@ -1,8 +1,8 @@
 """ Module for surface operations
 """
 
-import advcubit.system as _system
-import advcubit.functions as _functions
+import advcubit.system_module as _system
+import advcubit.function_module as _functions
 
 
 def getLastSurface():
@@ -48,7 +48,7 @@ def findClosestSurface(surfaces, point):
     :param point: the point in vector/list format
     :return: closest surface
     """
-    tmpDist = 1e45
+    tmpDist = float('Inf')
     tmpSurface = None
     for surface in surfaces:
         # calc distance to center

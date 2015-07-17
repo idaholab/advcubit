@@ -3,7 +3,7 @@
 
 
 import unittest
-import advcubit.utility as _utility
+import advcubit.utility_module as _utility
 
 
 class SetTest(unittest.TestCase):

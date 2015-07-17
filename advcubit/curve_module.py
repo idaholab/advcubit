@@ -3,10 +3,10 @@
 This module contains functions to create special kind of curves
 """
 
-import advcubit.system as _system
-import advcubit.common as _common
-import advcubit.functions as _functions
-import advcubit.transform as _transform
+import advcubit.system_module as _system
+import advcubit.common_module as _common
+import advcubit.function_module as _functions
+import advcubit.transform_module as _transform
 
 
 def lastCurve():

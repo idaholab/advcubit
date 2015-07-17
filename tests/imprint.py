@@ -2,7 +2,7 @@
 """
 
 import unittest
-import advcubit.utility as _utility
+import advcubit.utility_module as _utility
 
 
 class ImprintTest(unittest.TestCase):

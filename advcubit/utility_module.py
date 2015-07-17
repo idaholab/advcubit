@@ -5,7 +5,7 @@ This module provides general functions to controll settings, load, save and expo
 and merging and imprinting
 """
 
-import advcubit.system as _system
+import advcubit.system_module as _system
 
 
 def startCubit():
@@ -96,7 +96,7 @@ def export(filename, overwrite=True):
         _system.cubitCmd('export mesh "{0}"'.format(filename))
 
 
-def deleteJournalFiles(path='.', fileName='*'):
+def deleteJournalFiles(path='.', fileName='cubit*.jou'):
     """ Delete all Cubit journal files in specified folder
     :param path: path to  search
     :param fileName: glob file name to delete
@@ -105,6 +105,6 @@ def deleteJournalFiles(path='.', fileName='*'):
     import glob
     import os
 
-    filelist = glob.glob(path + '/{0}.jou'.format(fileName))
+    filelist = glob.glob(path + '/{0}'.format(fileName))
     for f in filelist:
         os.remove(f)

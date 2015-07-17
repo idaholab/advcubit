@@ -5,10 +5,11 @@ import tests.system as system
 import tests.utility as utility
 import tests.functions as functions
 import tests.transform as transform
+import tests.boolean as boolean
 import tests.vertex as vertex
 import tests.curve as curve
 import tests.surface as surface
-import tests.boolean as boolean
+import tests.volume as volume
 import tests.imprint as imprint
 import tests.mesh as mesh
 import tests.sideset as sideset
@@ -21,10 +22,11 @@ def testSuite():
     advcubitTests.addTest(utility.testSuite())
     advcubitTests.addTest(functions.testSuite())
     advcubitTests.addTest(transform.testSuite())
+    advcubitTests.addTest(boolean.testSuite())
     advcubitTests.addTest(vertex.testSuite())
     advcubitTests.addTest(curve.testSuite())
     advcubitTests.addTest(surface.testSuite())
-    advcubitTests.addTest(boolean.testSuite())
+    advcubitTests.addTest(volume.testSuite())
     advcubitTests.addTest(imprint.testSuite())
     advcubitTests.addTest(mesh.testSuite())
     advcubitTests.addTest(sideset.testSuite())

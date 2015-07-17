@@ -1,8 +1,8 @@
 """ module for sidesets and nodesets
 """
 
-import advcubit.system as _system
-import advcubit.common as _common
+import advcubit.system_module as _system
+import advcubit.common_module as _common
 
 
 def createSideset(bodies, sidesetId, bodyType=_common.BodyTypes.surface):

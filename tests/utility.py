@@ -3,8 +3,8 @@
 import unittest
 import tests.settings as _settings
 
-import advcubit.system as _system
-import advcubit.utility as _utility
+import advcubit.system_module as _system
+import advcubit.utility_module as _utility
 
 
 class UtilityTest(unittest.TestCase):

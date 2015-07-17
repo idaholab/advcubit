@@ -3,9 +3,9 @@
 This module contains different methods for imprinting, e.g. all or curve on surface.
 """
 
-import advcubit.system as _system
-import advcubit.common as _common
-import advcubit.functions as _functions
+import advcubit.system_module as _system
+import advcubit.common_module as _common
+import advcubit.function_module as _functions
 
 
 def compress():
