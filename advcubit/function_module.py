@@ -43,7 +43,10 @@ def listStr(objects):
         for item in objects:
             strList += ' {0}'.format(item)
     except TypeError:                           # catch single item
-        strList = ' {0}'.format(objects)
+        if objects is None:
+            strList = ' all'
+        else:
+            strList = ' {0}'.format(objects)
     return strList
 
 
