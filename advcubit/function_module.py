@@ -41,8 +41,9 @@ def getBodyType(cubitObject):
 
     :return: body type
     """
-    if not isinstance(cubitObject, _system.cubitModule.GeomEntity):
-        raise _system.AdvCubitException('Object is not a Cubit geometric entity')
+    if not isinstance(cubitObject, _system.cubitModule.GeomEntity) \
+            and not isinstance(cubitObject, _system.cubitModule.Body):
+        raise _system.AdvCubitException('Object is not a Cubit geometric entity "{0}"'.format(cubitObject))
 
     if isinstance(cubitObject, _system.cubitModule.Body):
         return _common.BodyTypes.body
@@ -94,12 +95,11 @@ def listIdString(objects, requiredType=None):
                     raise _system.AdvCubitException('Cubit entity does not match required type')
             elif bodyType is not None and tmpBodyType != bodyType:
                 raise _system.AdvCubitException('List contains more then one body type')
+            else:
+                bodyType = tmpBodyType
     except TypeError:                           # catch single item
-        if objects is None:
-            strList = ' all'
-        else:
-            bodyType = getBodyType(objects)
-            strList = ' {0}'.format(objects.id())
+        bodyType = getBodyType(objects)
+        strList = ' {0}'.format(objects.id())
     return bodyType, strList
 
 

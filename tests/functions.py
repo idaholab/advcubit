@@ -32,10 +32,18 @@ class FunctionTest(unittest.TestCase):
                          'Vertex detection failed')
         self.assertRaises(_system.AdvCubitException, _functions.getBodyType, '')
 
-
+    def test_list_id_str(self):
+        v = _system.cubitModule.brick(1, 1, 1)
+        self.assertEqual(_functions.listIdString(v), (_common.BodyTypes.body, ' 1'))
+        self.assertEqual(_functions.listIdString(v.bodies()), (_common.BodyTypes.body, ' 1'))
+        self.assertEqual(_functions.listIdString(v.volumes()), (_common.BodyTypes.volume, ' 1'))
+        self.assertEqual(_functions.listIdString(v.surfaces()), (_common.BodyTypes.surface, ' 1 2 3 4 5 6'))
+        self.assertEqual(_functions.listIdString(v.curves()), (_common.BodyTypes.curve, ' 1 2 3 4 5 6 7 8 9 10 11 12'))
+        self.assertEqual(_functions.listIdString(v.vertices()), (_common.BodyTypes.vertex, ' 1 2 3 4 5 6 7 8'))
 
 
 def testSuite():
     functionSuite = unittest.TestSuite()
     functionSuite.addTest(FunctionTest('test_body_type'))
+    functionSuite.addTest(FunctionTest('test_list_id_str'))
     return functionSuite

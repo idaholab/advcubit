@@ -18,9 +18,9 @@ topSurface = advcubit.findSurfaceWithNormal(brick.surfaces(), (0, 0, 1), 0)[0]
 # apply scheme
 advcubit.setMeshScheme(topSurface, advcubit.SurfaceMeshSchemes.tri)
 # mesh surface
-advcubit.mesh(topSurface, advcubit.BodyTypes.surface)
+advcubit.mesh(topSurface)
 # set volume mesh scheme
-advcubit.setMeshScheme(brick, advcubit.VolumeMeshSchemes.sweep, advcubit.BodyTypes.volume)
+advcubit.setMeshScheme(brick.volumes(), advcubit.VolumeMeshSchemes.sweep)
 # mesh volume
 advcubit.mesh(brick)
 # create block

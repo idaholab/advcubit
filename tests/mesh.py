@@ -19,7 +19,6 @@ class MeshTest(unittest.TestCase):
 
     def test_quality(self):
         v = _system.cubitModule.brick(1, 1, 1)
-        print(_mesh)
         _mesh.mesh(v)
         _mesh.meshQuality(v)
 

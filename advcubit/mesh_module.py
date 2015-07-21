@@ -21,64 +21,61 @@ class VolumeMeshSchemes:
     sphere = 'sphere'
 
 
-def setInterval(body, interval, bodyType=_common.BodyTypes.curve, *args, **kwargs):
+def setInterval(bodies, interval, *args, **kwargs):
     """ Set the number of intervals for a curve
 
-    :param body: the base curve
+    :param bdoies: the base curve
     :param interval: number of intervals
-    :param bodyType: type of body
     :param args: additional parameters for the command: 'option'
     :param kwargs: additional parameter value pairs: option=value
     :return: None
     """
-    _system.cubitCmd('{0} {1} interval {2} {3} {4}'.format(bodyType, body.id(), interval,
-                                                           _functions.listStr(args),
-                                                           _functions.listKeywordString(kwargs)))
+    _system.cubitCmd('{0[0]} {0[1]} interval {1} {2} {3}'.format(_functions.listIdString(bodies), interval,
+                                                                 _functions.listStr(args),
+                                                                 _functions.listKeywordString(kwargs)))
 
 
-def setAutoSize(body, factor, bodyType=_common.BodyTypes.curve, *args, **kwargs):
+def setAutoSize(bodies, factor, *args, **kwargs):
     """ Set auto size on a surface or curve
 
     :param body: the body
     :param factor: the auto size factor
     :param propagate: flag for propagation
-    :param bodyType: the body type
     :param args: additional parameters for the command: 'option'
     :param kwargs: additional parameter value pairs: option=value
     :return: None
     """
-    _system.cubitCmd('{0} {1} size auto factor {2} {3} {4}'.format(bodyType, body.id(), factor,
-                                                                   _functions.listStr(args),
-                                                                   _functions.listKeywordString(kwargs)))
+    _system.cubitCmd('{0[0]} {0[1]} size auto factor {1} {2} {3}'.format(_functions.listIdString(bodies), factor,
+                                                                         _functions.listStr(args),
+                                                                         _functions.listKeywordString(kwargs)))
 
 
-def setMeshScheme(body, meshScheme, bodyType=_common.BodyTypes.surface, *args, **kwargs):
+def setMeshScheme(bodies, meshScheme, *args, **kwargs):
     """ Assign a meshing scheme to a body
 
-    :param body: the body
+    :param bodies: the body
     :param meshScheme: the scheme
-    :param bodyType: the type of the body
     :param args: additional parameters for the command: 'option'
     :param kwargs: additional parameter value pairs: option=value
     :return: None
     """
-    _system.cubitCmd('{0} {1} scheme {2} {3} {4}'.format(bodyType, body.id(), meshScheme,
-                                                         _functions.listStr(args),
-                                                         _functions.listKeywordString(kwargs)))
+    # TODO check for body and change to volumes
+    _system.cubitCmd('{0[0]} {0[1]} scheme {1} {2} {3}'.format(_functions.listIdString(bodies), meshScheme,
+                                                               _functions.listStr(args),
+                                                               _functions.listKeywordString(kwargs)))
 
 
-def mesh(body, bodyType=_common.BodyTypes.volume, *args, **kwargs):
+def mesh(bodies, *args, **kwargs):
     """ Meshes a body using Cubits internal meshing function, that behaves differently
 
-    :param body: the body to mesh
-    :param bodyType: the body type
+    :param bodies: the body to mesh
     :param args: additional parameters for the command: 'option'
     :param kwargs: additional parameter value pairs: option=value
     :return: None
     """
-    _system.cubitCmd('mesh {0} {1} {2} {3}'.format(bodyType, body.id(),
-                                                   _functions.listStr(args),
-                                                   _functions.listKeywordString(kwargs)))
+    _system.cubitCmd('mesh {0[0]} {0[1]} {1} {2}'.format(_functions.listIdString(bodies),
+                                                         _functions.listStr(args),
+                                                         _functions.listKeywordString(kwargs)))
 
 
 def sweepMesh(body, sources, targets, *args, **kwargs):

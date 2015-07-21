@@ -76,6 +76,8 @@ def imprint(bodies=None, *args, **kwargs):
     if bodies is None:
         imprintAll(*args, **kwargs)
     else:
+        print(bodies)
+        print(_functions.listIdString(bodies))
         _system.cubitCmd('imprint {0[0]} {0[1]} {1} {2}'.format(_functions.listIdString(bodies),
                                                                 _functions.listStr(args),
                                                                 _functions.listKeywordString(kwargs)))
