@@ -29,7 +29,7 @@ def intersect(bodies, *args, **kwargs):
     :param kwargs: additional parameter value pairs: option=value
     :return: intersected body
     """
-    _system.cubitCmd('intersect body {0} {1} {2}'.format(_functions.listIdString(bodies),
-                                                         _functions.listStr(args),
-                                                         _functions.listKeywordString(kwargs)))
+    _system.cubitCmd('intersect {0[0]} {0[1]} {1} {2}'.format(_functions.listIdString(bodies),
+                                                              _functions.listStr(args),
+                                                              _functions.listKeywordString(kwargs)))
     return _transform.getLastBody()

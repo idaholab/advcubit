@@ -91,12 +91,12 @@ def sweepMesh(body, sources, targets, *args, **kwargs):
     :param kwargs: additional parameter value pairs: option=value
     :return: None
     """
-    _system.cubitCmd('volume {0} scheme sweep source {1} target {2} {3} {4}'.format(body.id(),
-                                                                                    _functions.listIdString(sources),
-                                                                                    _functions.listIdString(targets),
-                                                                                    _functions.listStr(args),
-                                                                                    _functions.listKeywordString(
-                                                                                        kwargs)))
+    _system.cubitCmd('volume {0} scheme sweep source {1[1]} target {2[1]} {3} {4}'
+                     .format(body.id(),
+                             _functions.listIdString(sources, _common.BodyTypes.surface),
+                             _functions.listIdString(targets, _common.BodyTypes.surface),
+                             _functions.listStr(args),
+                             _functions.listKeywordString(kwargs)))
     mesh(body.volumes()[0])
 
 
@@ -112,16 +112,15 @@ def scaleMesh(factor, *args, **kwargs):
                                                                       _functions.listKeywordString(kwargs)))
 
 
-def meshQuality(bodies, bodyType=_common.BodyTypes.volume, elementType='', *args, **kwargs):
+def meshQuality(bodies, elementType='', *args, **kwargs):
     """ Function to check the quality of the mesh
     :param bodies: list of bodies or single body, None gives all
-    :param bodyType: type of body
     :param elementType: mesh element type
     :param args: additional parameters for the command: 'option'
     :param kwargs: additional parameter value pairs: option=value
     :return: None
     """
-    _system.cubitCmd('quality {0} {1} {2} {3} {4}'.format(bodyType, _functions.listIdString(bodies),
-                                                          elementType,
-                                                          _functions.listStr(args),
-                                                          _functions.listKeywordString(kwargs)))
+    _system.cubitCmd('quality {0[0]} {0[1]} {1} {2} {3}'.format(_functions.listIdString(bodies),
+                                                                elementType,
+                                                                _functions.listStr(args),
+                                                                _functions.listKeywordString(kwargs)))

@@ -58,33 +58,33 @@ def imprintCurve(surface, curve, *args, **kwargs):
     :param kwargs: additional parameter value pairs: option=value
     :return: None
     """
-    _system.cubitCmd('imprint surface {0} curve {1} {2} {3}'.format(surface.id(), _functions.listIdString(curve),
-                                                                    _functions.listStr(args),
-                                                                    _functions.listKeywordString(kwargs)))
+    _system.cubitCmd('imprint surface {0} curve {1[1]} {2} {3}'.format(surface.id(),
+                                                                       _functions.listIdString(curve,
+                                                                                               _common.BodyTypes.curve),
+                                                                       _functions.listStr(args),
+                                                                       _functions.listKeywordString(kwargs)))
 
 
-def imprint(bodies=None, bodyType=_common.BodyTypes.body, *args, **kwargs):
+def imprint(bodies=None, *args, **kwargs):
     """ Imprint a list of bodies
 
     :param bodies: list of bodies or None
-    :param bodyType: type of bodies
     :param args: additional parameters for the command: 'option'
     :param kwargs: additional parameter value pairs: option=value
     :return: None
     """
     if bodies is None:
-        imprintAll()
+        imprintAll(*args, **kwargs)
     else:
-        _system.cubitCmd('imprint {0} {1} {2}'.format(bodyType, _functions.listIdString(bodies),
-                                                      _functions.listStr(args),
-                                                      _functions.listKeywordString(kwargs)))
+        _system.cubitCmd('imprint {0[0]} {0[1]} {1} {2}'.format(_functions.listIdString(bodies),
+                                                                _functions.listStr(args),
+                                                                _functions.listKeywordString(kwargs)))
 
 
-def merge(bodies=None, bodyType=_common.BodyTypes.body, *args, **kwargs):
+def merge(bodies=None, *args, **kwargs):
     """ Merge a list of bodies
 
     :param bodies: list of bodies or None
-    :param bodyType: type of bodies
     :param args: additional parameters for the command: 'option'
     :param kwargs: additional parameter value pairs: option=value
     :return: None
@@ -92,6 +92,6 @@ def merge(bodies=None, bodyType=_common.BodyTypes.body, *args, **kwargs):
     if bodies is None:
         mergeAll(*args, **kwargs)
     else:
-        _system.cubitCmd('merge {0} {1} {2}'.format(bodyType, _functions.listIdString(bodies),
-                                                    _functions.listStr(args),
-                                                    _functions.listKeywordString(kwargs)))
+        _system.cubitCmd('merge {0[0]} {0[1]} {1} {2}'.format(_functions.listIdString(bodies),
+                                                              _functions.listStr(args),
+                                                              _functions.listKeywordString(kwargs)))

@@ -47,7 +47,7 @@ class BlockTest(unittest.TestCase):
         v = _system.cubitModule.brick(1, 1, 1)
         v.volumes()[0].mesh()
         try:
-            _block.createBlockFromElements(33, 'hex', v.volumes()[0], 'volume')
+            _block.createBlockFromElements(33, 'hex', v.volumes()[0])
         except _system.AdvCubitException as e:
             self.assertTrue(False, str(e))
 

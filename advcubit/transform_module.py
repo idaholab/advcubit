@@ -19,14 +19,13 @@ def getLastBody():
         raise _system.AdvCubitException('Cannot retrieve last created body:\n' + str(e))
 
 
-def delete(bodies, blockType=_common.BodyTypes.body):
+def delete(bodies):
     """ Delete a body
 
     :param body: the body or list of bodies to be deleted
-    :param blockType: the body type
     :return: None
     """
-    _system.cubitCmd('delete {0} {1}'.format(blockType, _functions.listIdString(bodies)))
+    _system.cubitCmd('delete {0[0]} {0[1]}'.format(_functions.listIdString(bodies)))
 
 
 def rotate(body, angle, axis='z', *args, **kwargs):

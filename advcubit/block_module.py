@@ -36,24 +36,22 @@ def createBlock(bodies, blockId, bodyType=_common.BodyTypes.volume):
 
     :param bodies: the body or list of bodies to be assigned
     :param blockId: the block id
-    :param bodyType: the body type
     :return: None
     """
-    _system.cubitCmd('block {0} {1} {2}'.format(blockId, bodyType, _functions.listIdString(bodies)))
+    _system.cubitCmd('block {0} {1[0]} {1[1]}'.format(blockId, _functions.listIdString(bodies)))
 
 
-def createBlockFromElements(blockId, elementType, objects=None, bodyType=None):
+def createBlockFromElements(blockId, elementType, objects=None):
     """ Create a block with elements, limiting it to a specific body
     :param blockId: the block id
     :param elementType: the element type, eg. hex
     :param objects: list or single element id or body ids
-    :param bodyType: body type or None for element list
     :return: None
     """
-    if bodyType is None:
+    try:
+        cmdStr = 'block {0} {1} in {2[0]} {2[1]}'.format(blockId, elementType, _functions.listIdString(objects))
+    except _system.AdvCubitException:
         cmdStr = 'block {0} {1} {2}'.format(blockId, elementType, _functions.listStr(objects))
-    else:
-        cmdStr = 'block {0} {1} in {2} {3}'.format(blockId, elementType, bodyType, _functions.listIdString(objects))
     _system.cubitCmd(cmdStr)
 
 
