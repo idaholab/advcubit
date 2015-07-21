@@ -59,8 +59,10 @@ def setMeshScheme(bodies, meshScheme, *args, **kwargs):
     :param kwargs: additional parameter value pairs: option=value
     :return: None
     """
-    # TODO check for body and change to volumes
-    _system.cubitCmd('{0[0]} {0[1]} scheme {1} {2} {3}'.format(_functions.listIdString(bodies), meshScheme,
+    idList = _functions.listIdString(bodies)
+    if idList[0] == _common.BodyTypes.body:
+        idList = _functions.listIdString(_functions.getEntities(bodies, _common.BodyTypes.volume))
+    _system.cubitCmd('{0[0]} {0[1]} scheme {1} {2} {3}'.format(idList, meshScheme,
                                                                _functions.listStr(args),
                                                                _functions.listKeywordString(kwargs)))
 

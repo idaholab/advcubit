@@ -20,7 +20,7 @@ advcubit.setMeshScheme(topSurface, advcubit.SurfaceMeshSchemes.tri)
 # mesh surface
 advcubit.mesh(topSurface)
 # set volume mesh scheme
-advcubit.setMeshScheme(brick.volumes(), advcubit.VolumeMeshSchemes.sweep)
+advcubit.setMeshScheme(brick, advcubit.VolumeMeshSchemes.sweep)
 # mesh volume
 advcubit.mesh(brick)
 # create block

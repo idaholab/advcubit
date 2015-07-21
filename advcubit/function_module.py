@@ -59,6 +59,39 @@ def getBodyType(cubitObject):
         raise _system.AdvCubitException('Unknown Cubit body type')
 
 
+def getEntities(cubitObjects, entityType):
+    """ Get all entities of a type from a single or a list of cubit objects
+    :param cubitObjects: list or single cubit object
+    :param entityType: the type of the entities
+    :return: list of the sub entities
+    """
+    tmpList = []
+    try:
+        for item in cubitObjects:
+            if entityType == _common.BodyTypes.body:
+                tmpList.extend(item.bodies())
+            elif entityType == _common.BodyTypes.volume:
+                tmpList.extend(item.volumes())
+            elif entityType == _common.BodyTypes.surface:
+                tmpList.extend(item.surfaces())
+            elif entityType == _common.BodyTypes.curve:
+                tmpList.extend(item.curves())
+            elif entityType == _common.BodyTypes.vertex:
+                tmpList.extend(item.vertices())
+    except TypeError:
+        if entityType == _common.BodyTypes.body:
+            tmpList.extend(cubitObjects.bodies())
+        elif entityType == _common.BodyTypes.volume:
+            tmpList.extend(cubitObjects.volumes())
+        elif entityType == _common.BodyTypes.surface:
+            tmpList.extend(cubitObjects.surfaces())
+        elif entityType == _common.BodyTypes.curve:
+            tmpList.extend(cubitObjects.curves())
+        elif entityType == _common.BodyTypes.vertex:
+            tmpList.extend(cubitObjects.vertices())
+    return tmpList
+
+
 def listStr(objects):
     """ create a string with all objects
     :param objects: single object or list
