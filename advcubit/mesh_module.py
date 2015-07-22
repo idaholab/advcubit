@@ -21,64 +21,66 @@ class VolumeMeshSchemes:
     sphere = 'sphere'
 
 
-def setInterval(body, interval, bodyType=_common.BodyTypes.curve, *args, **kwargs):
+def setInterval(entities, interval, *args, **kwargs):
     """ Set the number of intervals for a curve
 
-    :param body: the base curve
+    :param entities: the base curve
     :param interval: number of intervals
-    :param bodyType: type of body
     :param args: additional parameters for the command: 'option'
     :param kwargs: additional parameter value pairs: option=value
     :return: None
     """
-    _system.cubitCmd('{0} {1} interval {2} {3} {4}'.format(bodyType, body.id(), interval,
-                                                           _functions.listStr(args),
-                                                           _functions.listKeywordString(kwargs)))
+    _system.cubitCmd('{0[0]} {0[1]} interval {1} {2} {3}'.format(_functions.listIdString(entities), interval,
+                                                                 _functions.listStr(args),
+                                                                 _functions.listKeywordString(kwargs)))
 
 
-def setAutoSize(body, factor, bodyType=_common.BodyTypes.curve, *args, **kwargs):
+def setAutoSize(entities, factor, *args, **kwargs):
     """ Set auto size on a surface or curve
 
-    :param body: the body
+    :param entities: list or single entity
     :param factor: the auto size factor
     :param propagate: flag for propagation
-    :param bodyType: the body type
     :param args: additional parameters for the command: 'option'
     :param kwargs: additional parameter value pairs: option=value
     :return: None
     """
-    _system.cubitCmd('{0} {1} size auto factor {2} {3} {4}'.format(bodyType, body.id(), factor,
-                                                                   _functions.listStr(args),
-                                                                   _functions.listKeywordString(kwargs)))
+    _system.cubitCmd('{0[0]} {0[1]} size auto factor {1} {2} {3}'.format(_functions.listIdString(entities), factor,
+                                                                         _functions.listStr(args),
+                                                                         _functions.listKeywordString(kwargs)))
 
 
-def setMeshScheme(body, meshScheme, bodyType=_common.BodyTypes.surface, *args, **kwargs):
+def setMeshScheme(entities, meshScheme, *args, **kwargs):
     """ Assign a meshing scheme to a body
 
-    :param body: the body
+    :param entities: list or single entity
     :param meshScheme: the scheme
-    :param bodyType: the type of the body
     :param args: additional parameters for the command: 'option'
     :param kwargs: additional parameter value pairs: option=value
     :return: None
     """
-    _system.cubitCmd('{0} {1} scheme {2} {3} {4}'.format(bodyType, body.id(), meshScheme,
-                                                         _functions.listStr(args),
-                                                         _functions.listKeywordString(kwargs)))
+    idList = _functions.listIdString(entities)
+    if idList[0] == _common.BodyTypes.body:
+        idList = _functions.listIdString(_functions.getEntities(entities, _common.BodyTypes.volume))
+    _system.cubitCmd('{0[0]} {0[1]} scheme {1} {2} {3}'.format(idList, meshScheme,
+                                                               _functions.listStr(args),
+                                                               _functions.listKeywordString(kwargs)))
 
 
-def mesh(body, bodyType=_common.BodyTypes.volume, *args, **kwargs):
+def mesh(entities, *args, **kwargs):
     """ Meshes a body using Cubits internal meshing function, that behaves differently
 
-    :param body: the body to mesh
-    :param bodyType: the body type
+    :param entities: list or single entity to mesh
     :param args: additional parameters for the command: 'option'
     :param kwargs: additional parameter value pairs: option=value
     :return: None
     """
-    _system.cubitCmd('mesh {0} {1} {2} {3}'.format(bodyType, body.id(),
-                                                   _functions.listStr(args),
-                                                   _functions.listKeywordString(kwargs)))
+    idList = _functions.listIdString(entities)
+    if idList[0] == _common.BodyTypes.body:
+        idList = _functions.listIdString(_functions.getEntities(entities, _common.BodyTypes.volume))
+    _system.cubitCmd('mesh {0[0]} {0[1]} {1} {2}'.format(idList,
+                                                         _functions.listStr(args),
+                                                         _functions.listKeywordString(kwargs)))
 
 
 def sweepMesh(body, sources, targets, *args, **kwargs):
@@ -91,12 +93,14 @@ def sweepMesh(body, sources, targets, *args, **kwargs):
     :param kwargs: additional parameter value pairs: option=value
     :return: None
     """
-    _system.cubitCmd('volume {0} scheme sweep source {1} target {2} {3} {4}'.format(body.id(),
-                                                                                    _functions.listIdString(sources),
-                                                                                    _functions.listIdString(targets),
-                                                                                    _functions.listStr(args),
-                                                                                    _functions.listKeywordString(
-                                                                                        kwargs)))
+    if not isinstance(body, _system.cubitModule.Body) and not isinstance(body, _system.cubitModule.Volume):
+        raise _system.AdvCubitException('Object is not a valid cubit entity "{0}"'.format(body))
+    _system.cubitCmd('volume {0} scheme sweep source {1[1]} target {2[1]} {3} {4}'
+                     .format(body.volumes()[0].id(),
+                             _functions.listIdString(sources, _common.BodyTypes.surface),
+                             _functions.listIdString(targets, _common.BodyTypes.surface),
+                             _functions.listStr(args),
+                             _functions.listKeywordString(kwargs)))
     mesh(body.volumes()[0])
 
 
@@ -112,16 +116,15 @@ def scaleMesh(factor, *args, **kwargs):
                                                                       _functions.listKeywordString(kwargs)))
 
 
-def meshQuality(bodies, bodyType=_common.BodyTypes.volume, elementType='', *args, **kwargs):
+def meshQuality(entities, elementType='', *args, **kwargs):
     """ Function to check the quality of the mesh
-    :param bodies: list of bodies or single body, None gives all
-    :param bodyType: type of body
+    :param entities: list of entities or single body, None gives all
     :param elementType: mesh element type
     :param args: additional parameters for the command: 'option'
     :param kwargs: additional parameter value pairs: option=value
     :return: None
     """
-    _system.cubitCmd('quality {0} {1} {2} {3} {4}'.format(bodyType, _functions.listIdString(bodies),
-                                                          elementType,
-                                                          _functions.listStr(args),
-                                                          _functions.listKeywordString(kwargs)))
+    _system.cubitCmd('quality {0[0]} {0[1]} {1} {2} {3}'.format(_functions.listIdString(entities),
+                                                                elementType,
+                                                                _functions.listStr(args),
+                                                                _functions.listKeywordString(kwargs)))

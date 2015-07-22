@@ -31,29 +31,30 @@ class VolumeElementTypes:
     WEDGE15 = 'WEDGE15'
 
 
-def createBlock(bodies, blockId, bodyType=_common.BodyTypes.volume):
-    """ Assign a body to a block
+def createBlock(entities, blockId):
+    """ Assign a entity to a block
 
-    :param bodies: the body or list of bodies to be assigned
+    :param entities: the entity or list of entities to be assigned
     :param blockId: the block id
-    :param bodyType: the body type
     :return: None
     """
-    _system.cubitCmd('block {0} {1} {2}'.format(blockId, bodyType, _functions.listIdString(bodies)))
+    _system.cubitCmd('block {0} {1[0]} {1[1]}'.format(blockId, _functions.listIdString(entities)))
 
 
-def createBlockFromElements(blockId, elementType, objects=None, bodyType=None):
-    """ Create a block with elements, limiting it to a specific body
+def createBlockFromElements(blockId, elementType, objects=None):
+    """ Create a block with elements, limiting it to a specific entity
     :param blockId: the block id
     :param elementType: the element type, eg. hex
-    :param objects: list or single element id or body ids
-    :param bodyType: body type or None for element list
+    :param objects: list or single element id or entity ids
     :return: None
     """
-    if bodyType is None:
+    try:
+        idList = _functions.listIdString(objects)
+        if idList[0] == _common.BodyTypes.body:
+            idList = _functions.listIdString(_functions.getEntities(objects, _common.BodyTypes.volume))
+        cmdStr = 'block {0} {1} in {2[0]} {2[1]}'.format(blockId, elementType, idList)
+    except _system.AdvCubitException:
         cmdStr = 'block {0} {1} {2}'.format(blockId, elementType, _functions.listStr(objects))
-    else:
-        cmdStr = 'block {0} {1} in {2} {3}'.format(blockId, elementType, bodyType, _functions.listIdString(objects))
     _system.cubitCmd(cmdStr)
 
 

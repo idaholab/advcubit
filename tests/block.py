@@ -21,14 +21,14 @@ class BlockTest(unittest.TestCase):
         v = _system.cubitModule.brick(1, 1, 1)
         v.volumes()[0].mesh()
         try:
-            _block.createBlock(v, 33, 'volume')
+            _block.createBlock(v, 33)
         except _system.AdvCubitException as e:
             self.assertTrue(False, str(e))
 
     def test_element_type(self):
         v = _system.cubitModule.brick(1, 1, 1)
         v.volumes()[0].mesh()
-        _block.createBlock(v, 33, 'volume')
+        _block.createBlock(v, 33)
         try:
             _block.setElementType(33, _block.VolumeElementTypes.HEX8)
         except _system.AdvCubitException as e:
@@ -37,7 +37,7 @@ class BlockTest(unittest.TestCase):
     def test_name_block(self):
         v = _system.cubitModule.brick(1, 1, 1)
         v.volumes()[0].mesh()
-        _block.createBlock(v, 33, 'volume')
+        _block.createBlock(v, 33)
         try:
             _block.nameBlock(33, 'testName')
         except _system.AdvCubitException as e:
@@ -47,7 +47,7 @@ class BlockTest(unittest.TestCase):
         v = _system.cubitModule.brick(1, 1, 1)
         v.volumes()[0].mesh()
         try:
-            _block.createBlockFromElements(33, 'hex', v.volumes()[0], 'volume')
+            _block.createBlockFromElements(33, 'hex', v.volumes()[0])
         except _system.AdvCubitException as e:
             self.assertTrue(False, str(e))
 
