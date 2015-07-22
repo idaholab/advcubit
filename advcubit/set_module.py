@@ -2,21 +2,17 @@
 """
 
 import advcubit.system_module as _system
-import advcubit.common_module as _common
+import advcubit.function_module as _functions
 
 
-def createSideset(bodies, sidesetId, bodyType=_common.BodyTypes.surface):
+def createSideset(entities, sidesetId):
     """ Create a side set
 
-    :param bodies: list of bodies to assign to side set
+    :param entities: list of entities to assign to side set
     :param sidesetId: the id number of the sideset
-    :param bodyType: the type of the bodies
-    :return:
+    :return: None
     """
-    tmpStr = ''
-    for body in bodies:
-        tmpStr += ' {0}'.format(body.id())
-    _system.cubitCmd('sideset {0} {1} {2}'.format(sidesetId, bodyType, tmpStr))
+    _system.cubitCmd('sideset {0} {1[0]} {1[1]}'.format(sidesetId, _functions.listIdString(entities)))
 
 
 def nameSideset(sidesetId, name):
@@ -29,18 +25,14 @@ def nameSideset(sidesetId, name):
     _system.cubitCmd('sideset {0} name "{1}"'.format(sidesetId, name))
 
 
-def createNodeset(bodies, nodesetId, bodyType=_common.BodyTypes.vertex):
-    """ Adds bodies to or creates node set
+def createNodeset(entities, nodesetId):
+    """ Adds entities to or creates node set
 
-    :param bodies: list of bodies
-    :param nodesetId: number for new/existing node set
-    :param bodyType: type of bodies
+    :param entities: list of entities
+    :param bodyType: type of entities
     :return: None
     """
-    tmpStr = ''
-    for body in bodies:
-        tmpStr += ' {0}'.format(body.id())
-    _system.cubitCmd('nodeset {0} {1} {2}'.format(nodesetId, bodyType, tmpStr))
+    _system.cubitCmd('nodeset {0} {1[0]} {1[1]}'.format(nodesetId, _functions.listIdString(entities)))
 
 
 def nameNodeset(nodesetId, name):

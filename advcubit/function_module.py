@@ -59,6 +59,27 @@ def getBodyType(cubitObject):
         raise _system.AdvCubitException('Unknown Cubit body type')
 
 
+def getSubEntities(cubitObject, entityType):
+    """ Get all sub entities of one type for a single object
+    :param cubitObject: single cubit entity
+    :param entityType: entity type to obtain
+    :return: list of sub entities
+    """
+    if entityType == _common.BodyTypes.body:
+        tmpList = cubitObject.bodies()
+    elif entityType == _common.BodyTypes.volume:
+        tmpList = cubitObject.volumes()
+    elif entityType == _common.BodyTypes.surface:
+        tmpList = cubitObject.surfaces()
+    elif entityType == _common.BodyTypes.curve:
+        tmpList = cubitObject.curves()
+    elif entityType == _common.BodyTypes.vertex:
+        tmpList = cubitObject.vertices()
+    else:
+        raise _system.AdvCubitException('Unknown entity type "{0}"'.format(entityType))
+    return tmpList
+
+
 def getEntities(cubitObjects, entityType):
     """ Get all entities of a type from a single or a list of cubit objects
     :param cubitObjects: list or single cubit object
@@ -68,27 +89,9 @@ def getEntities(cubitObjects, entityType):
     tmpList = []
     try:
         for item in cubitObjects:
-            if entityType == _common.BodyTypes.body:
-                tmpList.extend(item.bodies())
-            elif entityType == _common.BodyTypes.volume:
-                tmpList.extend(item.volumes())
-            elif entityType == _common.BodyTypes.surface:
-                tmpList.extend(item.surfaces())
-            elif entityType == _common.BodyTypes.curve:
-                tmpList.extend(item.curves())
-            elif entityType == _common.BodyTypes.vertex:
-                tmpList.extend(item.vertices())
+            tmpList.extend(getSubEntities(item, entityType))
     except TypeError:
-        if entityType == _common.BodyTypes.body:
-            tmpList.extend(cubitObjects.bodies())
-        elif entityType == _common.BodyTypes.volume:
-            tmpList.extend(cubitObjects.volumes())
-        elif entityType == _common.BodyTypes.surface:
-            tmpList.extend(cubitObjects.surfaces())
-        elif entityType == _common.BodyTypes.curve:
-            tmpList.extend(cubitObjects.curves())
-        elif entityType == _common.BodyTypes.vertex:
-            tmpList.extend(cubitObjects.vertices())
+        tmpList = getSubEntities(cubitObjects, entityType)
     return tmpList
 
 
@@ -97,11 +100,11 @@ def listStr(objects):
     :param objects: single object or list
     :return: list string
     """
-    try:                                        # try list
+    try:  # try list
         strList = ''
         for item in objects:
             strList += ' {0}'.format(item)
-    except TypeError:                           # catch single item
+    except TypeError:  # catch single item
         if objects is None:
             strList = ' all'
         else:
@@ -111,11 +114,11 @@ def listStr(objects):
 
 def listIdString(objects, requiredType=None):
     """ create a string of object ids from a list or single object
-    :param objects: single object or list, None gives 'all'
-    :param requiredType: type necessary to be in list
+    :param objects: single object or list, body type gives 'all' for body type
+    :param requiredType: type necessary to be in list, None to ignore
     :return: id list string
     """
-    try:                                        # try list
+    try:  # try list
         strList = ''
         bodyType = requiredType
         for item in objects:
@@ -130,9 +133,13 @@ def listIdString(objects, requiredType=None):
                 raise _system.AdvCubitException('List contains more then one body type')
             else:
                 bodyType = tmpBodyType
-    except TypeError:                           # catch single item
-        bodyType = getBodyType(objects)
-        strList = ' {0}'.format(objects.id())
+    except TypeError:  # catch single item
+        if isinstance(objects, str):
+            bodyType = objects
+            strList = ' all'
+        else:
+            bodyType = getBodyType(objects)
+            strList = ' {0}'.format(objects.id())
     return bodyType, strList
 
 

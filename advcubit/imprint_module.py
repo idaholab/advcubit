@@ -58,40 +58,40 @@ def imprintCurve(surface, curve, *args, **kwargs):
     :param kwargs: additional parameter value pairs: option=value
     :return: None
     """
-    _system.cubitCmd('imprint surface {0} curve {1[1]} {2} {3}'.format(surface.id(),
-                                                                       _functions.listIdString(curve,
-                                                                                               _common.BodyTypes.curve),
-                                                                       _functions.listStr(args),
-                                                                       _functions.listKeywordString(kwargs)))
+    _system.cubitCmd('imprint surface {0} curve {1[1]} {2} {3}'
+                     .format(_functions.listIdString(surface, _common.BodyTypes.surface),
+                             _functions.listIdString(curve, _common.BodyTypes.curve),
+                             _functions.listStr(args),
+                             _functions.listKeywordString(kwargs)))
 
 
-def imprint(bodies=None, *args, **kwargs):
+def imprint(entities=None, *args, **kwargs):
     """ Imprint a list of bodies
 
-    :param bodies: list of bodies or None
+    :param entities: list of bodies or None
     :param args: additional parameters for the command: 'option'
     :param kwargs: additional parameter value pairs: option=value
     :return: None
     """
-    if bodies is None:
+    if entities is None:
         imprintAll(*args, **kwargs)
     else:
-        _system.cubitCmd('imprint {0[0]} {0[1]} {1} {2}'.format(_functions.listIdString(bodies),
+        _system.cubitCmd('imprint {0[0]} {0[1]} {1} {2}'.format(_functions.listIdString(entities),
                                                                 _functions.listStr(args),
                                                                 _functions.listKeywordString(kwargs)))
 
 
-def merge(bodies=None, *args, **kwargs):
+def merge(entities=None, *args, **kwargs):
     """ Merge a list of bodies
 
-    :param bodies: list of bodies or None
+    :param entities: list of bodies or None
     :param args: additional parameters for the command: 'option'
     :param kwargs: additional parameter value pairs: option=value
     :return: None
     """
-    if bodies is None:
+    if entities is None:
         mergeAll(*args, **kwargs)
     else:
-        _system.cubitCmd('merge {0[0]} {0[1]} {1} {2}'.format(_functions.listIdString(bodies),
+        _system.cubitCmd('merge {0[0]} {0[1]} {1} {2}'.format(_functions.listIdString(entities),
                                                               _functions.listStr(args),
                                                               _functions.listKeywordString(kwargs)))

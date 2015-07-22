@@ -2,7 +2,6 @@
 """
 
 import advcubit.system_module as _system
-import advcubit.common_module as _common
 import advcubit.function_module as _functions
 
 
@@ -19,32 +18,33 @@ def getLastBody():
         raise _system.AdvCubitException('Cannot retrieve last created body:\n' + str(e))
 
 
-def delete(bodies):
-    """ Delete a body
+def delete(entities):
+    """ Delete a list or single entity
 
-    :param body: the body or list of bodies to be deleted
+    :param entities: the entity or list of entities to be deleted
     :return: None
     """
-    _system.cubitCmd('delete {0[0]} {0[1]}'.format(_functions.listIdString(bodies)))
+    _system.cubitCmd('delete {0[0]} {0[1]}'.format(_functions.listIdString(entities)))
 
 
-def rotate(body, angle, axis='z', *args, **kwargs):
-    """ Rotate a body
-    :param body: the body
+def rotate(entities, angle, axis='z', *args, **kwargs):
+    """ Rotate a entity
+    :param entities: the entity or list of entities
     :param angle: angle in degrees
     :param axis: coordinate system axis x, y, z
     :param args: additional parameters for the command: 'option'
     :param kwargs: additional parameter value pairs: option=value
     :return: None
     """
-    _system.cubitCmd('rotate body {0} angle {1} about {2} {3} {4}'.format(body.id(), angle, axis,
-                                                                          _functions.listStr(args),
-                                                                          _functions.listKeywordString(kwargs)))
+    _system.cubitCmd('rotate {0[0]} {0[1]} angle {1} about {2} {3} {4}'.format(_functions.listIdString(entities),
+                                                                               angle, axis,
+                                                                               _functions.listStr(args),
+                                                                               _functions.listKeywordString(kwargs)))
 
 
-def webcut(body, plane='x', offset=0, *args, **kwargs):
+def webcut(entities, plane='x', offset=0, *args, **kwargs):
     """
-    :param body: body to cut
+    :param entities: entities or single one to cut
     :param plane: plane: x, y, z
     :param offset: offset from origin
     :param args: additional parameters for the command: 'option'
@@ -52,49 +52,50 @@ def webcut(body, plane='x', offset=0, *args, **kwargs):
     :return: None
     """
     _system.cubitCmd(
-        'webcut body {0} with plane {1}plane offset {2} {3} {4}'.format(body.id(), plane, offset,
-                                                                        _functions.listStr(args),
-                                                                        _functions.listKeywordString(kwargs)))
+        'webcut {0[0]} {0[1]} with plane {1}plane offset {2} {3} {4}'.format(_functions.listIdString(entities),
+                                                                             plane, offset,
+                                                                             _functions.listStr(args),
+                                                                             _functions.listKeywordString(kwargs)))
 
 
-def sectionCut(bodies, plane='x', *args, **kwargs):
-    """ Section cut a body or list of bodies
-    :param bodies: the body
+def sectionCut(entities, plane='x', *args, **kwargs):
+    """ Section cut a entity or list of entities
+    :param entities: the entity or a list of entities
     :param plane: plane to cut at: x, y, z
     :param args: additional parameters for the command: 'option'
     :param kwargs: additional parameter value pairs: option=value
     :return: None
     """
-    _system.cubitCmd('section body {0} {1}plane'.format(_functions.listIdString(bodies), plane,
-                                                        _functions.listStr(args),
-                                                        _functions.listKeywordString(kwargs)))
+    _system.cubitCmd('section {0[0]} {0[1]} {1}plane {2} {3}'.format(_functions.listIdString(entities), plane,
+                                                                     _functions.listStr(args),
+                                                                     _functions.listKeywordString(kwargs)))
 
 
-def copyReflect(bodies, plane='x', *args, **kwargs):
-    """ Reflect and copy a body
+def copyReflect(entities, plane='x', *args, **kwargs):
+    """ Reflect and copy a list of entities
 
-    :param bodies: list or single base body
+    :param entities: list or single base entity
     :param plane: reflection plane x, y, z
     :param args: additional parameters for the command: 'option'
     :param kwargs: additional parameter value pairs: option=value
-    :return: created body
+    :return: created entity
     """
-    # TODO get list of bodies back
-    _system.cubitCmd('body {0} copy reflect {1}'.format(_functions.listIdString(bodies), plane,
-                                                        _functions.listStr(args),
-                                                        _functions.listKeywordString(kwargs)))
+    # TODO get list of entities back
+    _system.cubitCmd('{0[0]} {0[1]} copy reflect {1} {2} {3}'.format(_functions.listIdString(entities), plane,
+                                                                     _functions.listStr(args),
+                                                                     _functions.listKeywordString(kwargs)))
     return getLastBody()
 
 
-def move(bodies, vector):
-    """ Move a list of bodies at once
+def move(entities, vector):
+    """ Move a list of entities at once
 
-    :param bodies: list of bodies or single body
+    :param entities: list of entities or single entity
     :param vector: move vector in vector/list form
     :return: None
     """
     try:
-        for body in bodies:
-            _system.cubitModule.move(body, vector)
+        for entity in entities:
+            _system.cubitModule.move(entity, vector)
     except TypeError:
-        _system.cubitModule.move(bodies, vector)
+        _system.cubitModule.move(entities, vector)
