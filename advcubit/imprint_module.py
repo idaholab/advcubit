@@ -95,3 +95,16 @@ def merge(entities=None, *args, **kwargs):
         _system.cubitCmd('merge {0[0]} {0[1]} {1} {2}'.format(_functions.listIdString(entities),
                                                               _functions.listStr(args),
                                                               _functions.listKeywordString(kwargs)))
+
+
+def smartImprint(entities, *args, **kwargs):
+    """ Imprint function to only imprint overlapping entities
+    :param entities: lis of entities
+    :param args: additional parameters for the command: 'option'
+    :param kwargs:  additional parameter value pairs: option=value
+    :return: None
+    """
+    # TODO: all case, use parse_list()
+    pairs = _functions.searchOverlaps(entities)
+    for pair in pairs:
+        imprint(pair, *args, **kwargs)

@@ -2,6 +2,7 @@
 """
 
 import unittest
+
 import advcubit.utility_module as _utility
 import advcubit.function_module as _functions
 import advcubit.common_module as _common
@@ -41,9 +42,23 @@ class FunctionTest(unittest.TestCase):
         self.assertEqual(_functions.listIdString(v.curves()), (_common.BodyTypes.curve, ' 1 2 3 4 5 6 7 8 9 10 11 12'))
         self.assertEqual(_functions.listIdString(v.vertices()), (_common.BodyTypes.vertex, ' 1 2 3 4 5 6 7 8'))
 
+    def test_interval(self):
+        v1 = _system.cubitModule.brick(1, 1, 1)
+        v2 = _system.cubitModule.brick(1, 1, 1)
+        v3 = _system.cubitModule.brick(1, 1, 1)
+        v4 = _system.cubitModule.brick(1, 1, 1)
+        _system.cubitModule.move(v2, [1.0, 0, 0])
+        _system.cubitModule.move(v3, [1.1, 0, 0])
+        _system.cubitModule.move(v4, [0, 1.0, 0])
+
+        self.assertEqual(_functions.searchOverlaps([v1, v2, v3, v4]).sort(),
+                         [(v1, v2), (v2, v3), (v1, v4), (v2, v4)].sort(),
+                         'Pair detection failed')
+
 
 def testSuite():
     functionSuite = unittest.TestSuite()
     functionSuite.addTest(FunctionTest('test_body_type'))
     functionSuite.addTest(FunctionTest('test_list_id_str'))
+    functionSuite.addTest(FunctionTest('test_interval'))
     return functionSuite
