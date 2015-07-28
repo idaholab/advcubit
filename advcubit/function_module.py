@@ -10,7 +10,7 @@ def roundTuple(baseTuple, prec=2, tupleType=tuple):
     """ Round a tuple
 
     :param baseTuple: input tuple
-    :param prec: numer of digits
+    :param prec: number of digits
     :param tupleType: type of final tuple
     :return: rounded tuple of type tupleType
     """
@@ -26,7 +26,7 @@ def checkZero(baseTuple, prec=1e-15, tupleType=tuple):
     :param baseTuple: input tuple
     :param prec: abs value of zero
     :param tupleType: type of final tuple
-    :return: zerod tuple of type tupleType
+    :return: zeroed tuple of type tupleType
     """
     zeroed = []
     for item in baseTuple:
@@ -59,6 +59,59 @@ def getBodyType(cubitObject):
         raise _system.AdvCubitException('Unknown Cubit body type')
 
 
+def getClass(entityType):
+    """ Obtain reference to entity type class
+    :param entityType: type of entity
+    :return: reference to class
+    """
+    if entityType == _common.BodyTypes.vertex:
+        return _system.cubitModule.Vertex
+    elif entityType == _common.BodyTypes.curve:
+        return _system.cubitModule.Curve
+    elif entityType == _common.BodyTypes.surface:
+        return _system.cubitModule.Surface
+    elif entityType == _common.BodyTypes.volume:
+        return _system.cubitModule.Volume
+    elif entityType == _common.BodyTypes.body:
+        return _system.cubitModule.Body
+    else:
+        raise _system.AdvCubitException('Unknown entity type "{0}"'.format(entityType))
+
+
+def getTypeFct(entityType):
+    """ Obtain the function to obtain a cubit entity by id
+    :param entityType: type of entity
+    :return: function reference
+    """
+    if entityType == _common.BodyTypes.vertex:
+        return _system.cubitModule.vertex
+    elif entityType == _common.BodyTypes.curve:
+        return _system.cubitModule.curve
+    elif entityType == _common.BodyTypes.surface:
+        return _system.cubitModule.surface
+    elif entityType == _common.BodyTypes.volume:
+        return _system.cubitModule.volume
+    elif entityType == _common.BodyTypes.body:
+        return _system.cubitModule.body
+    else:
+        raise _system.AdvCubitException('Unknown entity type "{0}"'.format(entityType))
+
+
+def getEntities(entityType, stringList='all'):
+    """ Find all entities in current session of a type
+    :param entityType: type of the entity to obtain
+    :param stringList: cubit style list, default is all
+    :return: list of cubit entities
+    """
+    ids = _system.cubitExec(_system.cubitModule.parse_cubit_list, entityType, stringList)
+    typeRef = getTypeFct(entityType)
+
+    entityList = []
+    for i in ids:
+        entityList.append(_system.cubitExec(typeRef, i))
+    return entityList
+
+
 def getSubEntities(cubitObject, entityType):
     """ Get all sub entities of one type for a single object
     :param cubitObject: single cubit entity
@@ -80,7 +133,7 @@ def getSubEntities(cubitObject, entityType):
     return tmpList
 
 
-def getEntities(cubitObjects, entityType):
+def getEntitiesFromObject(cubitObjects, entityType):
     """ Get all entities of a type from a single or a list of cubit objects
     :param cubitObjects: list or single cubit object
     :param entityType: the type of the entities
@@ -143,12 +196,42 @@ def listIdString(objects, requiredType=None):
     return bodyType, strList
 
 
-def listKeywordString(kargs):
+def listKeywordString(kwargs):
     """ create list string of keyword arguments
-    :param kargs: keyword dict
+    :param kwargs: keyword dict
     :return: string of keyword arguments
     """
     strList = ''
-    for key, value in kargs.items():
+    for key, value in kwargs.items():
         strList += ' {0} {1}'.format(key, value)
     return strList
+
+
+def searchOverlaps(entities):
+    """ search for overlapping or touching objects
+    :param entities: list of objects
+    :return: list of pairs for overlapping objects
+    """
+    # get list of bounding boxes
+    boxes = []
+    for entity in entities:
+        tmpBox = _system.cubitModule.get_bounding_box(getBodyType(entity), entity.id())
+        boxes.append(((tmpBox[0], tmpBox[3], tmpBox[6]),
+                      (tmpBox[1], tmpBox[4], tmpBox[7]),
+                      entity))
+    # sort by first dimension
+    boxes.sort(key=lambda x: (x[0][0], -x[1][0], x[0][1], -x[1][1], x[0][2], -x[1][2]))
+
+    # search for overlap
+    pairs = []
+    for i, item1 in enumerate(boxes[:-1]):
+        for item2 in boxes[i + 1:]:
+            if item1[1][0] < item2[0][0] or item1[0][0] > item1[1][0]:
+                break
+            if item1[1][1] < item2[0][1] or item1[0][1] > item1[1][1]:
+                continue
+            if item1[1][2] < item2[0][2] or item1[0][2] > item1[1][2]:
+                continue
+
+            pairs.append((item1[2], item2[2]))
+    return pairs

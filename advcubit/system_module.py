@@ -9,12 +9,13 @@ import os as _os
 import warnings as _warnings
 
 cubitModule = None  # reference to the cubit module, used in all submodules
-cubitExec = None    # reference to the used cubit command
+cubitCmdRef = None  # reference to the used cubit command
 
 
 class AdvCubitException(RuntimeError):
     """ default exception for advcubit
     """
+
     def __init__(self, msg):
         """ Constructor
         :param msg: message string
@@ -50,7 +51,9 @@ def init(cubitPath=None, silentMode=True):
     try:
         import cubit
     except ImportError as e:
-        raise ImportError('Error initializing advcubit\nImportError: {0}\nIs the path to Cubit installation directory set correctly?'.format(e))
+        raise ImportError(
+            'Error initializing advcubit\nImportError: {0}\nIs the path to Cubit installation directory set correctly?'.format(
+                e))
 
     cubitModule = cubit
     enableSilentMode(silentMode)
@@ -62,11 +65,11 @@ def enableSilentMode(silentMode=True):
     :param silentMode: Flag for activation or deactivation
     :return: None
     """
-    global cubitExec
+    global cubitCmdRef
     if silentMode:
-        cubitExec = cubitModule.silent_cmd
+        cubitCmdRef = cubitModule.silent_cmd
     else:
-        cubitExec = cubitModule.cmd
+        cubitCmdRef = cubitModule.cmd
 
 
 def _initLinux(cubitPath):
@@ -104,11 +107,27 @@ def cubitCmd(cmdStr):
     :return: None
     """
     errorCount = cubitModule.get_error_count()
-    cubitExec(cmdStr)
+    cubitCmdRef(cmdStr)
     newCount = cubitModule.get_error_count()
     # check if a new error occurred
     if newCount > errorCount:
         raise AdvCubitException('Error executing command: "{0}"'.format(cmdStr))
+
+
+def cubitExec(function, *args, **kwargs):
+    """ Wraps a cubit function and detects execution errors
+    :param function: cubit function to wrap
+    :param args: parameters to the function
+    :param kwargs: keyword parameters to the function
+    :return: function return
+    """
+    errorCount = cubitModule.get_error_count()
+    returnValue = function(*args, **kwargs)
+    newCount = cubitModule.get_error_count()
+    if newCount > errorCount:
+        raise AdvCubitException('Error executing cubit function: "{0}" with {1} and {2}'.format(function,
+                                                                                                args, kwargs))
+    return returnValue
 
 
 def warning(msg):

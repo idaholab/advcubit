@@ -51,7 +51,7 @@ def createBlockFromElements(blockId, elementType, objects=None):
     try:
         idList = _functions.listIdString(objects)
         if idList[0] == _common.BodyTypes.body:
-            idList = _functions.listIdString(_functions.getEntities(objects, _common.BodyTypes.volume))
+            idList = _functions.listIdString(_functions.getEntitiesFromObject(objects, _common.BodyTypes.volume))
         cmdStr = 'block {0} {1} in {2[0]} {2[1]}'.format(blockId, elementType, idList)
     except _system.AdvCubitException:
         cmdStr = 'block {0} {1} {2}'.format(blockId, elementType, _functions.listStr(objects))
