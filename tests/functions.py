@@ -55,10 +55,24 @@ class FunctionTest(unittest.TestCase):
                          [(v1, v2), (v2, v3), (v1, v4), (v2, v4)].sort(),
                          'Pair detection failed')
 
+    def test_get_entities(self):
+        v1 = _system.cubitModule.brick(1, 1, 1)
+        self.assertEqual(_functions.getEntities(_common.BodyTypes.body, 'all').sort(), [v1.bodies()].sort(),
+                         'Body finding failed')
+        self.assertEqual(_functions.getEntities(_common.BodyTypes.volume, 'all').sort(), [v1.volumes()].sort(),
+                         'Volume finding failed')
+        self.assertEqual(_functions.getEntities(_common.BodyTypes.surface, 'all').sort(), [v1.surfaces()].sort(),
+                         'Surface finding failed')
+        self.assertEqual(_functions.getEntities(_common.BodyTypes.curve, 'all').sort(), [v1.curves()].sort(),
+                         'Curve finding failed')
+        self.assertEqual(_functions.getEntities(_common.BodyTypes.vertex, 'all').sort(), [v1.vertices()].sort(),
+                         'Vertex finding failed')
+
 
 def testSuite():
     functionSuite = unittest.TestSuite()
     functionSuite.addTest(FunctionTest('test_body_type'))
     functionSuite.addTest(FunctionTest('test_list_id_str'))
     functionSuite.addTest(FunctionTest('test_interval'))
+    functionSuite.addTest(FunctionTest('test_get_entities'))
     return functionSuite

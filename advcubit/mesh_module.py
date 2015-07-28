@@ -61,7 +61,7 @@ def setMeshScheme(entities, meshScheme, *args, **kwargs):
     """
     idList = _functions.listIdString(entities)
     if idList[0] == _common.BodyTypes.body:
-        idList = _functions.listIdString(_functions.getEntities(entities, _common.BodyTypes.volume))
+        idList = _functions.listIdString(_functions.getEntitiesFromObject(entities, _common.BodyTypes.volume))
     _system.cubitCmd('{0[0]} {0[1]} scheme {1} {2} {3}'.format(idList, meshScheme,
                                                                _functions.listStr(args),
                                                                _functions.listKeywordString(kwargs)))
@@ -77,7 +77,7 @@ def mesh(entities, *args, **kwargs):
     """
     idList = _functions.listIdString(entities)
     if idList[0] == _common.BodyTypes.body:
-        idList = _functions.listIdString(_functions.getEntities(entities, _common.BodyTypes.volume))
+        idList = _functions.listIdString(_functions.getEntitiesFromObject(entities, _common.BodyTypes.volume))
     _system.cubitCmd('mesh {0[0]} {0[1]} {1} {2}'.format(idList,
                                                          _functions.listStr(args),
                                                          _functions.listKeywordString(kwargs)))

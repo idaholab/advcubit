@@ -59,6 +59,59 @@ def getBodyType(cubitObject):
         raise _system.AdvCubitException('Unknown Cubit body type')
 
 
+def getClass(entityType):
+    """ Obtain reference to entity type class
+    :param entityType: type of entity
+    :return: reference to class
+    """
+    if entityType == _common.BodyTypes.vertex:
+        return _system.cubitModule.Vertex
+    elif entityType == _common.BodyTypes.curve:
+        return _system.cubitModule.Curve
+    elif entityType == _common.BodyTypes.surface:
+        return _system.cubitModule.Surface
+    elif entityType == _common.BodyTypes.volume:
+        return _system.cubitModule.Volume
+    elif entityType == _common.BodyTypes.body:
+        return _system.cubitModule.Body
+    else:
+        raise _system.AdvCubitException('Unknown entity type "{0}"'.format(entityType))
+
+
+def getTypeFct(entityType):
+    """ Obtain the function to obtain a cubit entity by id
+    :param entityType: type of entity
+    :return: function reference
+    """
+    if entityType == _common.BodyTypes.vertex:
+        return _system.cubitModule.vertex
+    elif entityType == _common.BodyTypes.curve:
+        return _system.cubitModule.curve
+    elif entityType == _common.BodyTypes.surface:
+        return _system.cubitModule.surface
+    elif entityType == _common.BodyTypes.volume:
+        return _system.cubitModule.volume
+    elif entityType == _common.BodyTypes.body:
+        return _system.cubitModule.body
+    else:
+        raise _system.AdvCubitException('Unknown entity type "{0}"'.format(entityType))
+
+
+def getEntities(entityType, stringList='all'):
+    """ Find all entities in current session of a type
+    :param entityType: type of the entity to obtain
+    :param stringList: cubit style list, default is all
+    :return: list of cubit entities
+    """
+    ids = _system.cubitExec(_system.cubitModule.parse_cubit_list, entityType, stringList)
+    typeRef = getTypeFct(entityType)
+
+    entityList = []
+    for i in ids:
+        entityList.append(_system.cubitExec(typeRef, i))
+    return entityList
+
+
 def getSubEntities(cubitObject, entityType):
     """ Get all sub entities of one type for a single object
     :param cubitObject: single cubit entity
@@ -80,7 +133,7 @@ def getSubEntities(cubitObject, entityType):
     return tmpList
 
 
-def getEntities(cubitObjects, entityType):
+def getEntitiesFromObject(cubitObjects, entityType):
     """ Get all entities of a type from a single or a list of cubit objects
     :param cubitObjects: list or single cubit object
     :param entityType: the type of the entities
