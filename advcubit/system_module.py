@@ -136,3 +136,11 @@ def warning(msg):
     :return: None
     """
     _warnings.warn(msg, RuntimeWarning)
+
+
+def debug(msg):
+    """ central debug wrapper
+    :param msg: message string
+    :return: None
+    """
+    pass
