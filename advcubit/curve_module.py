@@ -4,7 +4,6 @@ This module contains functions to create special kind of curves
 """
 
 import advcubit.system_module as _system
-import advcubit.common_module as _common
 import advcubit.function_module as _functions
 import advcubit.transform_module as _transform
 
@@ -14,9 +13,9 @@ def lastCurve():
 
     :return: last created curve
     """
-    lastId = _system.cubitModule.get_last_id('curve')
+    lastId = _system.cubitWrapper.get_last_id('curve')
     try:
-        return _system.cubitModule.curve(lastId)
+        return _system.cubitWrapper.curve(lastId)
     except RuntimeError as e:
         raise _system.AdvCubitException('Cannot retrieve last created surface!\n' + str(e))
 
@@ -41,8 +40,8 @@ def createCircle(radius, z=0.0):
     :param z: z offset
     :return: created curve
     """
-    vertexCenter = _system.cubitModule.create_vertex(0, 0, z)
-    vertexOuter = _system.cubitModule.create_vertex(radius, 0, z)
+    vertexCenter = _system.cubitWrapper.create_vertex(0, 0, z)
+    vertexOuter = _system.cubitWrapper.create_vertex(radius, 0, z)
     circle = createArc(vertexCenter, vertexOuter, vertexOuter)
     _transform.delete(vertexCenter)
     return circle
@@ -55,10 +54,10 @@ def createLine(point1, point2):
     :param point2: end point in list/tuple form
     :return: created curve
     """
-    point1 = _system.cubitModule.create_vertex(point1[0], point1[1], point1[2])
-    point2 = _system.cubitModule.create_vertex(point2[0], point2[1], point2[2])
+    point1 = _system.cubitWrapper.create_vertex(point1[0], point1[1], point1[2])
+    point2 = _system.cubitWrapper.create_vertex(point2[0], point2[1], point2[2])
 
-    return _system.cubitModule.create_curve(point1, point2)
+    return _system.cubitWrapper.create_curve(point1, point2)
 
 
 def tangentCurve(baseCurves, tangent, point=(0.0, 0.0, 0.0), prec=2):

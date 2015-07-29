@@ -16,7 +16,7 @@ def subtract(tool_in, from_in, imprint_in=False, keep_old_in=False):
     :return:
     """
     for body in tool_in:
-        from_in = _system.cubitModule.subtract([body], from_in, imprint_in, keep_old_in)
+        from_in = _system.cubitWrapper.subtract([body], from_in, imprint_in, keep_old_in)
 
     return from_in
 

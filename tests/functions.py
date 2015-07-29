@@ -20,7 +20,7 @@ class FunctionTest(unittest.TestCase):
         # _utility.closeCubit()
 
     def test_body_type(self):
-        v = _system.cubitModule.brick(1, 1, 1)
+        v = _system.cubitWrapper.brick(1, 1, 1)
         self.assertEqual(_functions.getBodyType(v), _common.BodyTypes.body,
                          'Body detection failed')
         self.assertEqual(_functions.getBodyType(v.volumes()[0]), _common.BodyTypes.volume,
@@ -34,7 +34,7 @@ class FunctionTest(unittest.TestCase):
         self.assertRaises(_system.AdvCubitException, _functions.getBodyType, '')
 
     def test_list_id_str(self):
-        v = _system.cubitModule.brick(1, 1, 1)
+        v = _system.cubitWrapper.brick(1, 1, 1)
         self.assertEqual(_functions.listIdString(v), (_common.BodyTypes.body, ' 1'))
         self.assertEqual(_functions.listIdString(v.bodies()), (_common.BodyTypes.body, ' 1'))
         self.assertEqual(_functions.listIdString(v.volumes()), (_common.BodyTypes.volume, ' 1'))
@@ -43,10 +43,10 @@ class FunctionTest(unittest.TestCase):
         self.assertEqual(_functions.listIdString(v.vertices()), (_common.BodyTypes.vertex, ' 1 2 3 4 5 6 7 8'))
 
     def test_interval(self):
-        v1 = _system.cubitModule.brick(1, 1, 1)
-        v2 = _system.cubitModule.brick(1, 1, 1)
-        v3 = _system.cubitModule.brick(1, 1, 1)
-        v4 = _system.cubitModule.brick(1, 1, 1)
+        v1 = _system.cubitWrapper.brick(1, 1, 1)
+        v2 = _system.cubitWrapper.brick(1, 1, 1)
+        v3 = _system.cubitWrapper.brick(1, 1, 1)
+        v4 = _system.cubitWrapper.brick(1, 1, 1)
         _system.cubitModule.move(v2, [1.0, 0, 0])
         _system.cubitModule.move(v3, [1.1, 0, 0])
         _system.cubitModule.move(v4, [0, 1.0, 0])
@@ -56,7 +56,7 @@ class FunctionTest(unittest.TestCase):
                          'Pair detection failed')
 
     def test_get_entities(self):
-        v1 = _system.cubitModule.brick(1, 1, 1)
+        v1 = _system.cubitWrapper.brick(1, 1, 1)
         self.assertEqual(_functions.getEntities(_common.BodyTypes.body, 'all').sort(), [v1.bodies()].sort(),
                          'Body finding failed')
         self.assertEqual(_functions.getEntities(_common.BodyTypes.volume, 'all').sort(), [v1.volumes()].sort(),
