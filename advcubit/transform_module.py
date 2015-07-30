@@ -98,4 +98,4 @@ def move(entities, vector):
         for entity in entities:
             _system.cubitWrapper.move(entity, vector)
     except TypeError:
-        _system.cubitModule.move(entities, vector)
+        _system.cubitWrapper.move(entities, vector)

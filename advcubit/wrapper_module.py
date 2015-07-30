@@ -18,11 +18,6 @@ def init():
         if name[0] == '_':
             continue
 
-        # test if we have already defined a function
-        if name in dir(advcubit):
-            _system.debug(name + ' already in advcubit')
-            continue
-
         var = getattr(_system.cubitModule, name)
 
         # detect function
@@ -58,9 +53,20 @@ def init():
 
             # copy to global namespace in wrapper
             globals()[name] = locals()[name]
-            # copy to advcubit
-            advcubitDict[name] = locals()[name]
+
+            # test if we have already defined a function
+            if name in advcubitDict:
+                _system.debug(name + ' already in advcubit')
+            else:
+                # copy to advcubit
+                advcubitDict[name] = locals()[name]
 
         # import all classes, no wrapping here at the moment
         elif _inspect.isclass(var):
             globals()[name] = var
+            # test if we have already defined a function
+            if name in advcubitDict:
+                _system.debug(name + ' already in advcubit')
+            else:
+                # copy to advcubit
+                advcubitDict[name] = var

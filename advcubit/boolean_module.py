@@ -15,8 +15,14 @@ def subtract(tool_in, from_in, imprint_in=False, keep_old_in=False):
     :param keep_old_in: flag to keep original bodies
     :return:
     """
-    for body in tool_in:
-        from_in = _system.cubitWrapper.subtract([body], from_in, imprint_in, keep_old_in)
+    if not isinstance(from_in, (list, tuple)):
+        from_in = [from_in]
+
+    try:
+        for body in tool_in:
+            from_in = _system.cubitWrapper.subtract([body], from_in, imprint_in, keep_old_in)
+    except TypeError:
+        from_in = _system.cubitWrapper.subtract([tool_in], from_in, imprint_in, keep_old_in)
 
     return from_in
 
