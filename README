@@ -50,6 +50,10 @@ import advcubit
 advcubit.init(cubitPath)
 import cubit
 
+All cubit python interface functions are available directly in advcubit. The are imported and wrapped
+within the package for error detection. It is recommended to use the advcubit wrapper functions instead
+of directly the interface. All wrapper functions have the identical name.
+
 EXAMPLES
 --------
 

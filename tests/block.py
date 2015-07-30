@@ -2,6 +2,7 @@
 """
 
 import unittest
+
 import advcubit.system_module as _system
 import advcubit.utility_module as _utility
 import advcubit.block_module as _block
@@ -18,7 +19,7 @@ class BlockTest(unittest.TestCase):
         _utility.closeCubit()
 
     def test_create_block(self):
-        v = _system.cubitModule.brick(1, 1, 1)
+        v = _system.cubitWrapper.brick(1, 1, 1)
         v.volumes()[0].mesh()
         try:
             _block.createBlock(v, 33)
@@ -26,7 +27,7 @@ class BlockTest(unittest.TestCase):
             self.assertTrue(False, str(e))
 
     def test_element_type(self):
-        v = _system.cubitModule.brick(1, 1, 1)
+        v = _system.cubitWrapper.brick(1, 1, 1)
         v.volumes()[0].mesh()
         _block.createBlock(v, 33)
         try:
@@ -35,7 +36,7 @@ class BlockTest(unittest.TestCase):
             self.assertTrue(False, str(e))
 
     def test_name_block(self):
-        v = _system.cubitModule.brick(1, 1, 1)
+        v = _system.cubitWrapper.brick(1, 1, 1)
         v.volumes()[0].mesh()
         _block.createBlock(v, 33)
         try:
@@ -44,7 +45,7 @@ class BlockTest(unittest.TestCase):
             self.assertTrue(False, str(e))
 
     def test_block_element(self):
-        v = _system.cubitModule.brick(1, 1, 1)
+        v = _system.cubitWrapper.brick(1, 1, 1)
         v.volumes()[0].mesh()
         try:
             _block.createBlockFromElements(33, 'hex', v.volumes()[0])

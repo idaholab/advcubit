@@ -41,19 +41,19 @@ def getBodyType(cubitObject):
 
     :return: body type
     """
-    if not isinstance(cubitObject, _system.cubitModule.GeomEntity) \
-            and not isinstance(cubitObject, _system.cubitModule.Body):
+    if not isinstance(cubitObject, _system.cubitWrapper.GeomEntity) \
+            and not isinstance(cubitObject, _system.cubitWrapper.Body):
         raise _system.AdvCubitException('Object is not a Cubit geometric entity "{0}"'.format(cubitObject))
 
-    if isinstance(cubitObject, _system.cubitModule.Body):
+    if isinstance(cubitObject, _system.cubitWrapper.Body):
         return _common.BodyTypes.body
-    elif isinstance(cubitObject, _system.cubitModule.Volume):
+    elif isinstance(cubitObject, _system.cubitWrapper.Volume):
         return _common.BodyTypes.volume
-    elif isinstance(cubitObject, _system.cubitModule.Surface):
+    elif isinstance(cubitObject, _system.cubitWrapper.Surface):
         return _common.BodyTypes.surface
-    elif isinstance(cubitObject, _system.cubitModule.Curve):
+    elif isinstance(cubitObject, _system.cubitWrapper.Curve):
         return _common.BodyTypes.curve
-    elif isinstance(cubitObject, _system.cubitModule.Vertex):
+    elif isinstance(cubitObject, _system.cubitWrapper.Vertex):
         return _common.BodyTypes.vertex
     else:
         raise _system.AdvCubitException('Unknown Cubit body type')
@@ -65,15 +65,15 @@ def getClass(entityType):
     :return: reference to class
     """
     if entityType == _common.BodyTypes.vertex:
-        return _system.cubitModule.Vertex
+        return _system.cubitWrapper.Vertex
     elif entityType == _common.BodyTypes.curve:
-        return _system.cubitModule.Curve
+        return _system.cubitWrapper.Curve
     elif entityType == _common.BodyTypes.surface:
-        return _system.cubitModule.Surface
+        return _system.cubitWrapper.Surface
     elif entityType == _common.BodyTypes.volume:
-        return _system.cubitModule.Volume
+        return _system.cubitWrapper.Volume
     elif entityType == _common.BodyTypes.body:
-        return _system.cubitModule.Body
+        return _system.cubitWrapper.Body
     else:
         raise _system.AdvCubitException('Unknown entity type "{0}"'.format(entityType))
 
@@ -84,15 +84,15 @@ def getTypeFct(entityType):
     :return: function reference
     """
     if entityType == _common.BodyTypes.vertex:
-        return _system.cubitModule.vertex
+        return _system.cubitWrapper.vertex
     elif entityType == _common.BodyTypes.curve:
-        return _system.cubitModule.curve
+        return _system.cubitWrapper.curve
     elif entityType == _common.BodyTypes.surface:
-        return _system.cubitModule.surface
+        return _system.cubitWrapper.surface
     elif entityType == _common.BodyTypes.volume:
-        return _system.cubitModule.volume
+        return _system.cubitWrapper.volume
     elif entityType == _common.BodyTypes.body:
-        return _system.cubitModule.body
+        return _system.cubitWrapper.body
     else:
         raise _system.AdvCubitException('Unknown entity type "{0}"'.format(entityType))
 
@@ -103,12 +103,12 @@ def getEntities(entityType, stringList='all'):
     :param stringList: cubit style list, default is all
     :return: list of cubit entities
     """
-    ids = _system.cubitExec(_system.cubitModule.parse_cubit_list, entityType, stringList)
+    ids = _system.cubitWrapper.parse_cubit_list(entityType, stringList)
     typeRef = getTypeFct(entityType)
 
     entityList = []
     for i in ids:
-        entityList.append(_system.cubitExec(typeRef, i))
+        entityList.append(typeRef(i))
     return entityList
 
 
@@ -215,7 +215,7 @@ def searchOverlaps(entities):
     # get list of bounding boxes
     boxes = []
     for entity in entities:
-        tmpBox = _system.cubitModule.get_bounding_box(getBodyType(entity), entity.id())
+        tmpBox = _system.cubitWrapper.get_bounding_box(getBodyType(entity), entity.id())
         boxes.append(((tmpBox[0], tmpBox[3], tmpBox[6]),
                       (tmpBox[1], tmpBox[4], tmpBox[7]),
                       entity))

@@ -10,10 +10,10 @@ def getLastBody():
 
     :return: The last body created within Cubit
     """
-    lastId = _system.cubitModule.get_last_id('body')
+    lastId = _system.cubitWrapper.get_last_id('body')
 
     try:
-        return _system.cubitModule.body(lastId)
+        return _system.cubitWrapper.body(lastId)
     except RuntimeError as e:
         raise _system.AdvCubitException('Cannot retrieve last created body:\n' + str(e))
 
@@ -96,6 +96,6 @@ def move(entities, vector):
     """
     try:
         for entity in entities:
-            _system.cubitModule.move(entity, vector)
+            _system.cubitWrapper.move(entity, vector)
     except TypeError:
         _system.cubitModule.move(entities, vector)

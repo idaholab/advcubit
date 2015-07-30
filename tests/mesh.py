@@ -2,6 +2,7 @@
 """
 
 import unittest
+
 import advcubit.system_module as _system
 import advcubit.utility_module as _utility
 import advcubit.mesh_module as _mesh
@@ -18,7 +19,7 @@ class MeshTest(unittest.TestCase):
         _utility.closeCubit()
 
     def test_quality(self):
-        v = _system.cubitModule.brick(1, 1, 1)
+        v = _system.cubitWrapper.brick(1, 1, 1)
         _mesh.mesh(v)
         _mesh.meshQuality(v)
 

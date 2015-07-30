@@ -93,7 +93,7 @@ def sweepMesh(body, sources, targets, *args, **kwargs):
     :param kwargs: additional parameter value pairs: option=value
     :return: None
     """
-    if not isinstance(body, _system.cubitModule.Body) and not isinstance(body, _system.cubitModule.Volume):
+    if not isinstance(body, _system.cubitWrapper.Body) and not isinstance(body, _system.cubitWrapper.Volume):
         raise _system.AdvCubitException('Object is not a valid cubit entity "{0}"'.format(body))
     _system.cubitCmd('volume {0} scheme sweep source {1[1]} target {2[1]} {3} {4}'
                      .format(body.volumes()[0].id(),

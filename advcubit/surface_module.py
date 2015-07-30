@@ -10,10 +10,10 @@ def getLastSurface():
 
     :return: The last surface created within Cubit
     """
-    lastId = _system.cubitModule.get_last_id('surface')
+    lastId = _system.cubitWrapper.get_last_id('surface')
 
     try:
-        return _system.cubitModule.surface(lastId)
+        return _system.cubitWrapper.surface(lastId)
     except RuntimeError as e:
         print('Cannot retrieve last body id:\n' + str(e))
         return None
