@@ -64,6 +64,7 @@ def init(cubitPath=None, silentMode=True):
     import advcubit.wrapper_module as wrapper
 
     cubitWrapper = wrapper
+    cubitWrapper.init()
 
 
 def enableSilentMode(silentMode=True):
@@ -134,7 +135,7 @@ def cubitExec(function, *args, **kwargs):
     newCount = cubitModule.get_error_count()
     if newCount > errorCount:
         raise AdvCubitException('Error executing cubit function: "{0}" with {1} and {2}'
-                                .format(function, args, kwargs))
+                                .format(function.__name__, args, kwargs))
     return returnValue
 
 

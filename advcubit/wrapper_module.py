@@ -6,49 +6,61 @@ import inspect as _inspect
 import advcubit
 import advcubit.system_module as _system
 
-for _name in dir(_system.cubitModule):
-    # test for protected
-    if _name[0] == '_':
-        continue
 
-    # test if we have already defined a function
-    if _name in dir(advcubit):
-        _system.debug(_name + ' already in advcubit')
-        continue
+def init():
+    """ Read cubit module and create wrapper functions
+    :return: None
+    """
+    advcubitDict = vars(advcubit)
 
-    var = getattr(_system.cubitModule, _name)
+    for name in dir(_system.cubitModule):
+        # test for protected
+        if name[0] == '_':
+            continue
 
-    # detect function
-    if _inspect.isfunction(var):
-        args = _inspect.getargspec(var)
-        docStr = var.__doc__
+        # test if we have already defined a function
+        if name in dir(advcubit):
+            _system.debug(name + ' already in advcubit')
+            continue
 
-        argStrDefaults = ''
-        argStr = ''
-        for i, arg in enumerate(args[0]):
-            argStrDefaults += ', {0}'.format(arg)
-            argStr += ', {0}'.format(arg)
+        var = getattr(_system.cubitModule, name)
 
-            if args[3] is not None:
-                t = len(args[0]) - len(args[3])
-                if i >= t:
-                    argStrDefaults += '={0}'.format(args[3][i - t])
+        # detect function
+        if _inspect.isfunction(var):
+            args = _inspect.getargspec(var)
+            docStr = var.__doc__
 
-        if args[1] is not None:
-            argStrDefaults += ', *{0}'.format(args[1])
-            argStr += ', *{0}'.format(args[1])
+            argStrDefaults = ''
+            argStr = ''
+            for i, arg in enumerate(args[0]):
+                argStrDefaults += ', {0}'.format(arg)
+                argStr += ', {0}'.format(arg)
 
-        if args[2] is not None:
-            argStrDefaults += ', **{0}'.format(args[2])
-            argStr += ', **{0}'.format(args[2])
+                if args[3] is not None:
+                    t = len(args[0]) - len(args[3])
+                    if i >= t:
+                        argStrDefaults += '={0}'.format(args[3][i - t])
 
-        funcStr = '''def {0}(*args):
-        """ {1}
-        """
-        return _system.cubitExec(_system.cubitModule.{0}, *args)'''.format(_name, docStr, argStrDefaults[1:], argStr)
+            if args[1] is not None:
+                argStrDefaults += ', *{0}'.format(args[1])
+                argStr += ', *{0}'.format(args[1])
 
-        exec funcStr
+            if args[2] is not None:
+                argStrDefaults += ', **{0}'.format(args[2])
+                argStr += ', **{0}'.format(args[2])
 
-    # import all classes, no wrapping here at the moment
-    elif _inspect.isclass(var):
-        globals()[_name] = var
+            funcStr = '''def {0}(*args):
+            """ {1}
+            """
+            return _system.cubitExec(_system.cubitModule.{0}, *args)'''.format(name, docStr, argStrDefaults[1:], argStr)
+
+            exec funcStr
+
+            # copy to global namespace in wrapper
+            globals()[name] = locals()[name]
+            # copy to advcubit
+            advcubitDict[name] = locals()[name]
+
+        # import all classes, no wrapping here at the moment
+        elif _inspect.isclass(var):
+            globals()[name] = var
