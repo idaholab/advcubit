@@ -3,6 +3,7 @@ import unittest
 # import tests
 import tests.system as system
 import tests.utility as utility
+import tests.wrapper as wrapper
 import tests.functions as functions
 import tests.transform as transform
 import tests.boolean as boolean
@@ -20,6 +21,7 @@ def testSuite():
     advcubitTests = unittest.TestSuite()
     advcubitTests.addTest(system.testSuite())
     advcubitTests.addTest(utility.testSuite())
+    advcubitTests.addTest(wrapper.testSuite())
     advcubitTests.addTest(functions.testSuite())
     advcubitTests.addTest(transform.testSuite())
     advcubitTests.addTest(boolean.testSuite())
