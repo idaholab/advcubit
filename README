@@ -2,7 +2,7 @@ A script package for an advanced cubit interface. Provides a lot of functionalit
 included in the official python interface.
 
 BUGS AND FEATURES REQUESTS
---------------------------
+==========================
 
 If there is a bug or a feature, that is missing, please submit an issue. This package is maintained,
 but new features are only implemented on request. And even this can take a while, depending on my time.
@@ -13,7 +13,7 @@ For feature requests, provide the Cubit syntax and a link to the Cubit documenta
 syntax is described. Also give an example, what is expected by that command to be done.
 
 INSTALLATION
-------------
+============
 
 To install the package, run:
 
@@ -25,7 +25,7 @@ according python executable. To install as a normal user, use the --user flag fo
 python2.6 setup.py install --user # for MacOs as normal user
 
 USAGE
------
+=====
 
 Import the module into python. The module must be initialized prior to usage. To do so, run:
 
@@ -55,7 +55,7 @@ within the package for error detection. It is recommended to use the advcubit wr
 of directly the interface. All wrapper functions have the identical name.
 
 EXAMPLES
---------
+========
 
 Examples are provides in the examples directory. The examples available at the moment are:
 
@@ -64,7 +64,7 @@ cmd.py -> demonstrates the difference of cubit.cmd and advcubit.cmd
 parameters.py -> shows, how to pass arbitrary parameters to advcubit functions
 
 TESTS
------
+=====
 
 To run the tests, simply execute the run_tests.py scripts with the correct python interpreter. To run
 the tests, $CUBIT_PATH must be set. To implement tests, please take a look at the already provided tests.
@@ -75,7 +75,7 @@ https://docs.python.org/2.6/library/unittest.html MacOs python 2.6
 https://docs.python.org/2/library/unittest.html Linux python 2.7
 
 CODING GUIDELINES
------------------
+=================
 
 The coding guidelines are PEP8. They can be found at https://www.python.org/dev/peps/pep-0008/.
 Only the naming conventions differ from that. Classes start with an upper case, functions and
