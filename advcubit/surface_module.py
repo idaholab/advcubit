@@ -1,8 +1,8 @@
 """ Module for surface operations
 """
 
-import advcubit.system as _system
-import advcubit.functions as _functions
+import advcubit.system_module as _system
+import advcubit.function_module as _functions
 
 
 def getLastSurface():
@@ -10,10 +10,10 @@ def getLastSurface():
 
     :return: The last surface created within Cubit
     """
-    lastId = _system.cubitModule.get_last_id('surface')
+    lastId = _system.cubitWrapper.get_last_id('surface')
 
     try:
-        return _system.cubitModule.surface(lastId)
+        return _system.cubitWrapper.surface(lastId)
     except RuntimeError as e:
         print('Cannot retrieve last body id:\n' + str(e))
         return None
@@ -48,7 +48,7 @@ def findClosestSurface(surfaces, point):
     :param point: the point in vector/list format
     :return: closest surface
     """
-    tmpDist = 1e45
+    tmpDist = float('Inf')
     tmpSurface = None
     for surface in surfaces:
         # calc distance to center

@@ -3,13 +3,13 @@
 This module provides functions to create missing volume types in Cubit.
 """
 
-import advcubit.system as _system
-import advcubit.functions as _functions
-import advcubit.curve as _curve
-import advcubit.transform as _transform
-import advcubit.boolean as _boolean
-
 import math
+
+import advcubit.system_module as _system
+import advcubit.function_module as _functions
+import advcubit.curve_module as _curve
+import advcubit.transform_module as _transform
+import advcubit.boolean_module as _boolean
 
 
 def getLastVolume():
@@ -17,10 +17,10 @@ def getLastVolume():
 
     :return: The last volume created within Cubit
     """
-    lastId = _system.cubitModule.get_last_id('body')
+    lastId = _system.cubitWrapper.get_last_id('body')
 
     try:
-        return _system.cubitModule.volume(lastId)
+        return _system.cubitWrapper.volume(lastId)
     except RuntimeError as e:
         print('Cannot retrieve last volume id:\n' + str(e))
         return None
@@ -79,7 +79,7 @@ def cylinder(height, radius):
     :return: created volume
     """
     circle = _curve.createCircle(radius, 0.5 * height)
-    surface = _system.cubitModule.create_surface([circle]).surfaces()[0]
+    surface = _system.cubitWrapper.create_surface([circle]).surfaces()[0]
 
     return sweepDirection(surface, height, 'nz')
 
@@ -107,24 +107,24 @@ def arc(radius, startAngle, endAngle, height, thickness):
     :param thickness:
     :return: created volume
     """
-    center = _system.cubitModule.create_vertex(0, 0, height / 2)
+    center = _system.cubitWrapper.create_vertex(0, 0, height / 2)
     points = [
-        _system.cubitModule.create_vertex(math.cos(startAngle) * radius, math.sin(startAngle) * radius, height / 2),
-        _system.cubitModule.create_vertex(math.cos(endAngle) * radius, math.sin(endAngle) * radius, height / 2),
-        _system.cubitModule.create_vertex(math.cos(endAngle) * (radius + thickness),
+        _system.cubitWrapper.create_vertex(math.cos(startAngle) * radius, math.sin(startAngle) * radius, height / 2),
+        _system.cubitWrapper.create_vertex(math.cos(endAngle) * radius, math.sin(endAngle) * radius, height / 2),
+        _system.cubitWrapper.create_vertex(math.cos(endAngle) * (radius + thickness),
                                           math.sin(endAngle) * (radius + thickness), height / 2),
-        _system.cubitModule.create_vertex(math.cos(startAngle) * (radius + thickness),
+        _system.cubitWrapper.create_vertex(math.cos(startAngle) * (radius + thickness),
                                           math.sin(startAngle) * (radius + thickness), height / 2)
     ]
 
     curves = [_curve.createArc(center, points[0], points[1]),
-              _system.cubitModule.create_curve(points[1], points[2]),
+              _system.cubitWrapper.create_curve(points[1], points[2]),
               _curve.createArc(center, points[2], points[3]),
-              _system.cubitModule.create_curve(points[3], points[0])
+              _system.cubitWrapper.create_curve(points[3], points[0])
               ]
 
-    normal = _system.cubitModule.create_curve(center, _system.cubitModule.create_vertex(0, 0, -height / 2))
-    surface = _system.cubitModule.create_surface(curves).surfaces()[0]
+    normal = _system.cubitWrapper.create_curve(center, _system.cubitWrapper.create_vertex(0, 0, -height / 2))
+    surface = _system.cubitWrapper.create_surface(curves).surfaces()[0]
     body = sweepCurve(surface, normal)
     _transform.delete(normal, 'curve')
 

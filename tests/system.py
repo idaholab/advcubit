@@ -2,8 +2,8 @@
 """
 
 import unittest
-import advcubit.system as _system
-import advcubit.utility as _utility
+import advcubit.system_module as _system
+import advcubit.utility_module as _utility
 
 
 class SystemTest(unittest.TestCase):
