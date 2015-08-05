@@ -5,7 +5,6 @@
 import advcubit
 
 advcubit.init('/Applications/Cubit-15.1/Cubit.app/Contents/MacOS', False)
-import cubit
 
 # start cubit
 advcubit.startCubit()
@@ -13,7 +12,7 @@ advcubit.startCubit()
 # create a circle
 circle = advcubit.createCircle(1)
 # create a surface from circle
-surface = cubit.create_surface([circle]).surfaces()[0]
+surface = advcubit.create_surface([circle]).surfaces()[0]
 
 # set meshing scheme, use the additional parameters for advanced control
 advcubit.setMeshScheme(surface, advcubit.SurfaceMeshSchemes.circle, fraction=0.5, interval=3)
