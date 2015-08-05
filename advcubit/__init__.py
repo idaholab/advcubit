@@ -15,6 +15,7 @@ from advcubit.system_module import cubitCmd as cmd
 from advcubit.system_module import AdvCubitException
 
 from advcubit.common_module import *
+from advcubit.function_module import *
 from advcubit.utility_module import *
 from advcubit.transform_module import *
 from advcubit.boolean_module import *
