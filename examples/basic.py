@@ -4,8 +4,7 @@
 # import the package
 import advcubit
 # initialize advcubit
-advcubit.init('/Applications/Cubit-15.1/Cubit.app/Contents/MacOS')
-
+advcubit.init()
 
 # start cubit
 advcubit.startCubit()
