@@ -99,3 +99,20 @@ def move(entities, vector):
             _system.cubitWrapper.move(entity, vector)
     except TypeError:
         _system.cubitWrapper.move(entities, vector)
+
+
+def copy(entities):
+    """ Copy a list of entities
+
+    :param entities: List of entities or single entity
+    :return: List of copied entities or single entity
+    """
+
+    bodies = []
+    try:
+        for entity in entities:
+            bodies.append(_system.cubitWrapper.copy_body(entity))
+    except TypeError:
+        bodies = _system.cubitWrapper.copy_body(entities)
+
+    return bodies
