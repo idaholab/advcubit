@@ -60,3 +60,18 @@ def findClosestSurface(surfaces, point):
             tmpSurface = surface
 
     return tmpSurface
+
+
+def findCommonSurfaces(entities):
+    """ Find surfaces that all bodies or volumes have in common
+
+    :param entities: list of bodies or volumes
+    :return: set of surfaces which all enteties have
+    """
+
+    surfaces = set(entities[0].surfaces())
+
+    for entity in entities:
+        surfaces &= set(entity.surfaces())
+
+    return surfaces

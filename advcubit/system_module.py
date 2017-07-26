@@ -66,6 +66,10 @@ def init(cubitPath=None, silentMode=True):
     cubitWrapper = wrapper
     cubitWrapper.init()
 
+    # add more functionality to classes
+    import advcubit.class_module as classes
+    classes.patch_classes()
+
 
 def enableSilentMode(silentMode=True):
     """ Activates the silent mode
