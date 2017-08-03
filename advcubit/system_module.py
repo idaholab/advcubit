@@ -158,3 +158,9 @@ def debug(msg):
     """
     if debugging:
         print(msg)
+
+
+def resetErrors():
+    """ Reset the error count to supress the error message at the end of a scripts
+    """
+    cubitCmdRef('reset errors')
