@@ -129,3 +129,13 @@ def arc(radius, startAngle, endAngle, height, thickness):
     _transform.delete(normal, 'curve')
 
     return body
+
+
+def setName(entities, name):
+    """ Set a name for a single entity or a list of entities
+
+    :param entities: single or list of entities
+    :param name: name to be set
+    :return: None
+    """
+    _system.cubitCmd('{0[0]} {0[1]} rename "{1}"'.format(_functions.listIdString(entities), name))
