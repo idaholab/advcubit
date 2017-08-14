@@ -38,7 +38,7 @@ def createBlock(entities, blockId):
     :param blockId: the block id
     :return: None
     """
-    _system.cubitCmd('block {0} {1[0]} {1[1]}'.format(blockId, _functions.listIdString(entities)))
+    _system.cubitCmd('block {0} add {1[0]} {1[1]}'.format(blockId, _functions.listIdString(entities)))
 
 
 def createBlockFromElements(blockId, elementType, objects=None):

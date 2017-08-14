@@ -139,3 +139,25 @@ def setName(entities, name):
     :return: None
     """
     _system.cubitCmd('{0[0]} {0[1]} rename "{1}"'.format(_functions.listIdString(entities), name))
+
+
+def setColor(entities, color):
+    """ Set the color for a single entity or a list of entities
+
+    Colors available are:
+    red green yellow magenta khaki cyan white skyblue gold lightblue lightgreen salmon coral pink purple paleturquoise
+    lightsalmon springgreen lightcyan orange seagreen pink turquoise greenyellow powderblue mediumturquoise, grey
+    tomato lightcyan dodgerblue aquamarine lightgoldenrodyellow darkgreen lightcoral mediumslateblue lightseagreen
+    goldenrod indianred mediumspringgreen darkturquoise yellowgreen chocolate steelblue burlywood hotpink saddlebrown
+    violet tan mediumseagreen thistle palegoldenrod firebrick palegreen lightyellow darksalmon orangered palevioletred
+    limegreen mediumblue blueviolet deeppink beige royalblue darkkhaki lawngreen lightgoldenrod plum sandybrown
+    lightslateblue orchid cadetblue peru olivedrab mediumpurple maroon lightpink darkslateblue rosybrown
+    mediumvioletred lightsteelblue mediumaquamarine proe_background win2kgray proe_2001_top proe_2001_bottom
+    wildfire_top wildfire_bottom
+
+    :param entities: single or list of entities
+    :param color: color, choose from available colors
+    :return: None
+    """
+
+    _system.cubitCmd('color {0[0]} {0[1]} {1}'.format(_functions.listIdString(entities), color))
