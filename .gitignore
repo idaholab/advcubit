@@ -1,0 +1,8 @@
+# git ignore file for advcubt
+
+# python files
+*.pyc
+/build/
+
+# mesh files
+*.e

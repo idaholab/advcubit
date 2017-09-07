@@ -171,26 +171,26 @@ def listIdString(objects, requiredType=None):
     :param requiredType: type necessary to be in list, None to ignore
     :return: id list string
     """
-    try:  # try list
-        strList = ''
-        bodyType = requiredType
-        for item in objects:
-            tmpBodyType = getBodyType(item)
-            strList += ' {0}'.format(item.id())
+    if isinstance(objects, str):
+        bodyType = objects
+        strList = ' all'
+    else:
+        try:  # try list
+            strList = ''
+            bodyType = requiredType
+            for item in objects:
+                tmpBodyType = getBodyType(item)
+                strList += ' {0}'.format(item.id())
 
-            # test the body type we obtained
-            if requiredType is not None:
-                if tmpBodyType != requiredType:
-                    raise _system.AdvCubitException('Cubit entity does not match required type')
-            elif bodyType is not None and tmpBodyType != bodyType:
-                raise _system.AdvCubitException('List contains more then one body type')
-            else:
-                bodyType = tmpBodyType
-    except TypeError:  # catch single item
-        if isinstance(objects, str):
-            bodyType = objects
-            strList = ' all'
-        else:
+                # test the body type we obtained
+                if requiredType is not None:
+                    if tmpBodyType != requiredType:
+                        raise _system.AdvCubitException('Cubit entity does not match required type')
+                elif bodyType is not None and tmpBodyType != bodyType:
+                    raise _system.AdvCubitException('List contains more then one body type')
+                else:
+                    bodyType = tmpBodyType
+        except TypeError:  # catch single item
             bodyType = getBodyType(objects)
             strList = ' {0}'.format(objects.id())
     return bodyType, strList

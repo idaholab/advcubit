@@ -95,6 +95,18 @@ def export(filename, overwrite=True):
     else:
         _system.cubitCmd('export mesh "{0}"'.format(filename))
 
+def executeJournalFile(fileName):
+    """ Read and execute a journal file
+
+    :param fileName: path and name of journal file
+    :return: None
+    """
+    import __builtin__
+
+    with __builtin__.open(fileName, 'r') as journal:
+        for line in journal:
+            _system.cubitCmd(line)
+
 
 def deleteJournalFiles(path='.', fileName='cubit*.jou'):
     """ Delete all Cubit journal files in specified folder

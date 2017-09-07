@@ -4,15 +4,12 @@
 # import the package
 import advcubit
 # initialize advcubit
-advcubit.init('/Applications/Cubit-15.1/Cubit.app/Contents/MacOS')
-# import the normal cubit module
-import cubit
-
+advcubit.init()
 
 # start cubit
 advcubit.startCubit()
 # create a simple brick
-brick = cubit.brick(1, 1, 1)
+brick = advcubit.brick(1, 1, 1)
 # find top surface
 topSurface = advcubit.findSurfaceWithNormal(brick.surfaces(), (0, 0, 1), 0)[0]
 # apply scheme

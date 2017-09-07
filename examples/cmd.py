@@ -3,7 +3,7 @@
 
 # import and init advcubit
 import advcubit
-advcubit.init('/Applications/Cubit-15.1/Cubit.app/Contents/MacOS', False)
+advcubit.init(None, False)
 import cubit
 
 # start cubit
