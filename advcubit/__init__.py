@@ -13,6 +13,7 @@ _system.checkVersion()
 from advcubit.system_module import init
 from advcubit.system_module import cubitCmd as cmd
 from advcubit.system_module import AdvCubitException
+from advcubit.system_module import enableSilentMode, disableSilentMode
 
 from advcubit.common_module import *
 from advcubit.function_module import *
