@@ -84,6 +84,11 @@ def enableSilentMode(silentMode=True):
     else:
         cubitCmdRef = cubitModule.cmd
 
+def disableSilentMode():
+    """ Deactivate the silent mode
+    """
+    enableSilentMode(False)
+
 
 def _initLinux(cubitPath):
     """ Adds the necessary folders to the python path on Linux OS
@@ -158,9 +163,3 @@ def debug(msg):
     """
     if debugging:
         print(msg)
-
-
-def resetErrors():
-    """ Reset the error count to supress the error message at the end of a scripts
-    """
-    cubitCmdRef('reset errors')

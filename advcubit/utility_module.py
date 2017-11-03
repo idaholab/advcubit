@@ -52,6 +52,20 @@ def enableJournal(enabled=True):
     _system.cubitCmd('journal {0}'.format(enabled))
 
 
+def reset():
+    """ Creates an empty workspace
+
+    :return: None
+    """
+    _system.cubitCmd('reset')
+
+
+def resetErrors():
+    """ Reset the error count to supress the error message at the end of a scripts
+    """
+    _system.cubitCmd('reset errors')
+
+
 def newFile():
     """ Creates an empty workspace
 
@@ -95,17 +109,22 @@ def export(filename, overwrite=True):
     else:
         _system.cubitCmd('export mesh "{0}"'.format(filename))
 
-def executeJournalFile(fileName):
+def executeJournalFile(fileName, echo=False):
     """ Read and execute a journal file
 
     :param fileName: path and name of journal file
+    :param echo: print commands before executing them, default False
     :return: None
     """
     import __builtin__
 
     with __builtin__.open(fileName, 'r') as journal:
         for line in journal:
-            _system.cubitCmd(line)
+            # line = line.split('#')[0].strip()
+            line = line.strip()
+            if line:
+                print(line)
+                _system.cubitCmd(line)
 
 
 def deleteJournalFiles(path='.', fileName='cubit*.jou'):
