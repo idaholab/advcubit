@@ -83,5 +83,5 @@ def sortCurves(curves):
     :param curves: list of curves
     :return: new list of sorted curves
     """
-    sortedCurves = sorted(curves, cmp=lambda x, y: cmp(x.lenght(), y.length())) #TODO check this
+    sortedCurves = sorted(curves, cmp=lambda x, y: cmp(x.length(), y.length())) #TODO check this
     return sortedCurves
