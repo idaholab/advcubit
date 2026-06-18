@@ -1,3 +1,10 @@
+> [!WARNING]
+> **This repository has been archived and is no longer maintained.**
+> The code is provided for historical reference and may contain unpatched
+> or unknown vulnerabilities. It should not be used in production systems.
+
+---
+
 # advcubit
 A script package for an advanced cubit interface. Provides a lot of functionality, that is not included in the official python interface.
 
